@@ -26,7 +26,7 @@ Route::get('/watchAjax','ProductController@watchAjax');
 // Admin 
 Route::get('/admin', 'AdminController@index');
 Route::get('/dashboard', 'AdminController@index');
-Route::get('/dashboarasfsasfssd', 'AdminController@index');
+
 // Product
 Route::get('/home-add-product', 'ProductController@home');
 Route::get('/edit-product/{id_product}', 'ProductController@edit');
