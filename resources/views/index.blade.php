@@ -71,7 +71,7 @@
                             <ul>
                                 <li>
                                     <div class="search">
-                                        <form action="searchProduct" method="get">
+                                        <form action="{{url('/searchProduct')}}" method="get">
                                             
                                             <label for="search"></label>
                                             <input class="input" id="searchAjaxProduct"  name="keyword" type="search" class="form-control" placeholder="Nhập tìm kiếm">
