@@ -71,9 +71,10 @@
                             <ul>
                                 <li>
                                     <div class="search">
-                                        <form action="#">
+                                        <form action="searchProduct" method="get">
+                                            
                                             <label for="search"></label>
-                                            <input class="input" id="searchAjaxProduct" type="search" class="form-control" placeholder="Nhập tìm kiếm">
+                                            <input class="input" id="searchAjaxProduct"  name="keyword" type="search" class="form-control" placeholder="Nhập tìm kiếm">
                                             <button class="fas fa-search"></button>
                                         </form>
                                         <div id="searchAjax">

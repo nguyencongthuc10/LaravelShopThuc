@@ -23,6 +23,7 @@ Route::get('/detail-product/{id}', 'ProductController@detail_product');
 Route::get('/watch-man', 'ProductController@watch');
 Route::post('/watchAjax','ProductController@watchAjax');
 Route::post('/searchAjax','ProductController@searchAjax');
+Route::get('/searchProduct', 'ProductController@searchProduct');
 // =============================== Back-end =============================================//
 // Admin 
 Route::get('/admin', 'AdminController@index');

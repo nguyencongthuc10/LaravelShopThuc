@@ -670,4 +670,15 @@ class ProductController extends Controller
         echo $result;
 
     }
+    public function searchProduct(Request $request)
+    {  
+        $data = $request->keyword;
+        if($data == null){
+            $resultSearchProduct = null;
+        }else{
+            $resultSearchProduct = Product::orderBy('id', 'DESC')->where('name_product','LIKE', "%$data%")->get();
+        }
+        
+        return view('customer/search_product', compact('resultSearchProduct'));
+    }
 }
