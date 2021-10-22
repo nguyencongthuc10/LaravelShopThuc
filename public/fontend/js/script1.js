@@ -113,6 +113,7 @@
      $("#bars").css("opacity", "0");
      $("#close").css("opacity", "1");
      $("#close").css("top", "15px");
+
  });
 
  $('#close').click(function() {

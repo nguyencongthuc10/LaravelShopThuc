@@ -240,13 +240,13 @@ h3.title-comm:before {
     text-transform: uppercase;
     font-size: 30px;
     padding-left: 105px;
-    padding-bottom: 5px;
+    padding-bottom: 10px;
     padding-top: 10px;
 }
 
 .shopthuc .header-banner .cart .cart-span {
     position: absolute;
-    top: 60px;
+    top: 68px;
     right: 129px;
     cursor: pointer;
     color: #fff;
@@ -429,16 +429,69 @@ h3.title-comm:before {
 
 .shopthuc .header-banner .menu li .search {
     position: absolute;
-    top: 60px;
+    top: 64px;
     right: 25%;
-    border-radius: 80px;
+}
+
+.shopthuc .header-banner .menu li .search .suggestSearch {
+    position: absolute;
+    z-index: 1000;
+    left: 3px;
+    right: 0;
+    width: 298px;
+    max-height: 375px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border: 1px solid #ebebeb;
+    background-color: #fff;
+    -moz-transition: all .3s ease-out;
+    -ms-transition: all .3s ease-out;
+    -o-transition: all .3s ease-out;
+    transition: all .3s ease-out;
+}
+
+.shopthuc .header-banner .menu li .search .suggestSearch ul li a img {
+    width: 50px;
+    height: 50px;
+}
+
+.shopthuc .header-banner .menu li .search .suggestSearch ul li a {
+    text-decoration: none;
+    color: #000;
+    display: flex;
+    align-content: space-between;
+    align-items: center;
+}
+
+.shopthuc .header-banner .menu li .search .suggestSearch ul li a .search_nameandPrice {
+    margin-top: -20px;
+    width: 230px;
+    font-size: 13px;
+}
+
+.shopthuc .header-banner .menu li .search .suggestSearch ul li a h3 {
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 13px;
+    text-overflow: ellipsis;
+}
+
+.shopthuc .header-banner .menu li .search .suggestSearch ul li {
+    padding: 5px 0 5px 0;
+    list-style: none;
+    cursor: pointer;
+    display: block;
+    border-bottom: 1px solid #ebebeb
+}
+
+.shopthuc .header-banner .menu li .search .suggestSearch ul li:hover {
+    background: rgb(173, 173, 180);
 }
 
 .shopthuc .header-banner .menu li .search input {
-    border-radius: 80px;
     height: 34px;
     border: none;
-    width: 250px;
+    width: 300px;
     transition: all 0.5s;
     outline: none;
     z-index: 99;
@@ -447,7 +500,6 @@ h3.title-comm:before {
 .shopthuc .header-banner .menu li .search button {
     z-index: 1;
     position: absolute;
-    border-radius: 100%;
     padding: 9px;
     right: 0px;
     background: #bf2323;
@@ -1237,15 +1289,20 @@ h3.title-comm:before {
         top: 80px;
         padding: 10px 20px;
     }
+    .shopthuc .header-banner .logo {
+        font-size: 25px;
+        padding-top: 15px;
+        padding-left: 30px;
+        padding-bottom: 15px;
+    }
 }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 768px) {
     .shopthuc .header-top {
         display: none;
     }
     .shopthuc .header-banner .logo {
         text-align: center;
-        font-size: 25px;
         padding-top: 10px;
         padding-left: 0;
     }
@@ -1268,7 +1325,7 @@ h3.title-comm:before {
         opacity: 0;
         color: #000;
         position: absolute;
-        top: 30px;
+        top: 45px;
         font-size: 20px;
         left: 275px;
         z-index: 101;
@@ -1288,15 +1345,23 @@ h3.title-comm:before {
         right: initial;
         z-index: 10000;
     }
+    .shopthuc .header-banner .menu li .search .suggestSearch {
+        right: -28px;
+        margin-top: 4px;
+        left: auto;
+    }
     .shopthuc .header-banner .menu li .search input {
-        width: 250px;
         border: revert;
         position: absolute;
-        right: 0;
+        top: -10px;
+        right: -30px;
     }
     .shopthuc .header-banner .menu li .search button {
         padding: 8px;
         z-index: 100;
+        position: absolute;
+        right: -30px;
+        top: -10px;
     }
     .shopthuc .header-banner .menu .menu-1 {
         position: absolute;

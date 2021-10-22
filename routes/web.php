@@ -21,7 +21,8 @@ Route::post('/load-more-product','ProductController@loadMore');
 
 Route::get('/detail-product/{id}', 'ProductController@detail_product');
 Route::get('/watch-man', 'ProductController@watch');
-Route::get('/watchAjax','ProductController@watchAjax');
+Route::post('/watchAjax','ProductController@watchAjax');
+Route::post('/searchAjax','ProductController@searchAjax');
 // =============================== Back-end =============================================//
 // Admin 
 Route::get('/admin', 'AdminController@index');

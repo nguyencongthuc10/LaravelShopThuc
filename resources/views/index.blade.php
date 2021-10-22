@@ -73,10 +73,16 @@
                                     <div class="search">
                                         <form action="#">
                                             <label for="search"></label>
-                                            <input class="input " type="search" placeholder="Nhập tìm kiếm">
+                                            <input class="input" id="searchAjaxProduct" type="search" class="form-control" placeholder="Nhập tìm kiếm">
                                             <button class="fas fa-search"></button>
                                         </form>
+                                        <div id="searchAjax">
+                                            
+                                        </div>
                                     </div>
+                                    
+
+                                    
 
                                 </li>
                                 <div id="menu-1" class="menu-1">
@@ -314,7 +320,7 @@
 
                 function watchAjax($data1, $data2, $id, $classify, $sortWatch, $last_price) {
                     $.ajax({
-                        method: 'get',
+                        method: 'post',
                         url: '{{ url('/watchAjax') }}',
                         data: {
 
@@ -459,5 +465,63 @@
             }
             })();
             
+        </script>
+
+        <script>
+            (function(){
+                
+                
+                function searchAjax($data) {
+                    $.ajax({
+                        method: 'post',
+                        url: '{{ url('/searchAjax') }}',
+                        timeout: 3000,
+                        data: {
+
+                            data: $data, 
+                        },
+                        success: function(data) {  
+                            
+                            $('#searchAjax').html(data);
+                        }
+                    });
+                }
+
+
+                function delay(callback, ms) {
+                var timer = 0;
+                return function() {
+                    var context = this, args = arguments;
+                    clearTimeout(timer);
+                    timer = setTimeout(function () {
+                    callback.apply(context, args);
+                    }, ms || 0);
+                };
+                }
+                $('#searchAjaxProduct').keyup(delay(function (e) {
+                    data = $(this).val()
+                   if(data == null){
+                    searchAjax('');
+                   }else{
+                    searchAjax(data);
+                   }
+                }, 500));
+                // $('#searchAjaxProduct').keyup(function(){
+                //     data = $(this).val()
+                //    if(data == null){
+                //     searchAjax('');
+                //    }else{
+                //     searchAjax(data);
+                //    }
+                // });
+                $('#searchAjaxProduct').blur(function(){
+                    searchAjax('');
+                });
+
+          
+
+               
+            })();
+                
         </script>
     </body>

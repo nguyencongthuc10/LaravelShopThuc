@@ -314,14 +314,15 @@ class ProductController extends Controller
         }
 
         echo $output;
+   
     }
     // Chi tiết sản phấm
     public function detail_product(Request $request, $id)
     {
         $detail_product = Product::find($id);
         $id_brand = $detail_product->brand->id;
-        $related = Product::where('status_product', '1')->where('id_brand', $id_brand)->orderBy('id', 'DESC')->take(4)->get();
-
+        $related = Product::where('status_product', '1')->where('id_brand', $id_brand)->orderBy('id', 'DESC')->whereNotIn('id',[$id])->take(4)->get();
+     
         return view('customer/detail_product', compact('detail_product', 'related'));
 
     }
@@ -535,46 +536,9 @@ class ProductController extends Controller
         $last_id;
         if ($request->id > 0) {
             $watch_product = watchProductId($sortWatch, $data1, $data2, $price_final, $id, $classify);
-            // if ($data1 == 0 && $data2 == 0) {
-            //     $watch_product = watchProductId($sortWatch, $data1, $data2, $price_final, $id, $classify);
-
-            // } elseif ($data1 == 2000000 && $data2 == 0) {
-
-            //     $watch_product = watchProductId($sortWatch, $data1, $data2, $price_final, $id, $classify);
-            // } elseif ($data1 == 2000000 && $data2 == 5000000) {
-            //     $watch_product = watchProductId($sortWatch, $data1, $data2, $price_final, $id, $classify);
-
-            // } elseif ($data1 == 5000000 && $data2 == 10000000) {
-            //     $watch_product = watchProductId($sortWatch, $data1, $data2, $price_final, $id, $classify);
-
-            // } elseif ($data1 == 10000000 && $data2 == 20000000) {
-            //     $watch_product = watchProductId($sortWatch, $data1, $data2, $price_final, $id, $classify);
-
-            // } elseif ($data2 == 99) {
-            //     $watch_product = watchProductId($sortWatch, $data1, $data2, $price_final, $id, $classify);
-
-            // } else {
-            //     $watch_product = watchProductId($sortWatch, $data1, $data2, $price_final, $id, $classify);
-            // }
-
+           
         } else {
             $watch_product = watchProductNotId($sortWatch, $data1, $data2, $classify);
-            // if ($data1 == 0 && $data2 == 0) {
-            //     $watch_product = watchProductNotId($sortWatch, $data1, $data2, $classify);
-            // } elseif ($data1 == 2000000 && $data2 == 0) {
-            //     $watch_product = watchProductNotId($sortWatch, $data1, $data2, $classify);
-            // } elseif ($data1 == 2000000 && $data2 == 5000000) {
-            //     $watch_product = watchProductNotId($sortWatch, $data1, $data2, $classify);
-            // } elseif ($data1 == 5000000 && $data2 == 10000000) {
-            //     $watch_product = watchProductNotId($sortWatch, $data1, $data2, $classify);
-            // } elseif ($data1 == 10000000 && $data2 == 20000000) {
-            //     $watch_product = watchProductNotId($sortWatch, $data1, $data2, $classify);
-            // } elseif ($data2 == 99) {
-            //     $watch_product = watchProductNotId($sortWatch, $data1, $data2, $classify);
-            // } else {
-            //     $watch_product = watchProductNotId($sortWatch, $data1, $data2, $classify);
-            // }
-
         }
 
         $output = '';
@@ -662,6 +626,48 @@ class ProductController extends Controller
         }
 
         echo $output;
+
+    }
+    public function searchAjax(Request $request){
+        $data = $request->data;
+        $result = '';
+        if($data == null)
+        {
+            echo $result;
+            return;
+        }
+        else{
+            $resultSearch = Product::orderBy('id', 'DESC')->where('name_product','LIKE', "%$data%")->get();
+        }
+        $result .= '
+        <div class="suggestSearch">
+            <ul>
+        ';
+                  
+        
+        if(!$resultSearch->isEmpty()){
+            foreach($resultSearch as $resultForeach){
+                $result .= '
+                <li>
+                    <a href="' . URL('detail-product/' . $resultForeach->id) . '">
+                        <img src="' . URL('public/updates/product/' . $resultForeach->image_product) . '" alt="'.$resultForeach->image_product.'">
+                        <div class="search_nameandPrice">
+                            <h3>' . $resultForeach->name_product . '</h3>
+                            <span>' . number_format($resultForeach->price_product) . ' ' . 'VND' . '</span>
+                        </div>
+                    </a>
+                </li>
+
+                ';
+            }
+        $result .= '
+        </ul>
+        </div>';    
+        }else{
+            $result = '';
+        }
+
+        echo $result;
 
     }
 }
