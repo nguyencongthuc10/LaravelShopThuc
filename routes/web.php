@@ -24,6 +24,11 @@ Route::get('/watch-man', 'ProductController@watch');
 Route::post('/watchAjax','ProductController@watchAjax');
 Route::post('/searchAjax','ProductController@searchAjax');
 Route::get('/searchProduct', 'ProductController@searchProduct');
+
+Route::get('/login', 'LoginController@login');
+Route::get('/register', 'LoginController@register');
+Route::post('/register','LoginController@executedRegister');
+Route::post('/login','LoginController@executeLogin');
 // =============================== Back-end =============================================//
 // Admin 
 Route::get('/admin', 'AdminController@index');

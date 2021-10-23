@@ -12,11 +12,11 @@
             <div class="sanpham">
                 <div class="row-sp">
                     @if ($resultSearchProduct == null)
-                    <div>
+                    <div style="display: flex;height: 154px; align-items: center;">
                         <h3>Không có sản phẩm nào !</h3>
                     </div>
                     @elseif ($resultSearchProduct->isEmpty()) 
-                    <div>
+                    <div style="display: flex;height: 154px; align-items: center;">
                         <h3>Không có sản phẩm nào !</h3>
                     </div>
                     @else
@@ -59,7 +59,7 @@
         
                                             <div class="btn-cart-detail">
                                                 <a href=""><button class="pr-cart"> <i class="fal fa-shopping-cart"></i></button></a>
-                                                <a href="{{URL('detail-product/' . $searchProduct->id) }}"><button class="pr-detail">Chi tiết <i class="far fa-angle-double-right"></i></button></a>
+                                                <a href="{{URL('detail-product/' . $searchProduct->id) }}"><button class="pr-detail" href="{{URL('detail-product/' . $searchProduct->id) }}" type="button">Chi tiết <i class="far fa-angle-double-right"></i></button></a>
                                             </div>
                                         </div>
                                     </form>

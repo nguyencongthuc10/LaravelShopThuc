@@ -71,7 +71,7 @@
                             <ul>
                                 <li>
                                     <div class="search">
-                                        <form action="{{url('/searchProduct')}}" method="get">
+                                        <form action="{{url('/searchProduct')}}" method="get" id="FormsearchAjaxProduct">
                                             
                                             <label for="search"></label>
                                             <input class="input" id="searchAjaxProduct"  name="keyword" type="search" class="form-control" placeholder="Nhập tìm kiếm">
@@ -93,7 +93,7 @@
                                     <li><a href="{{ URL('/watch-man') }}">Đồng hồ nam</a></li>
                                     <li><a href="{{ URL('/watch-woman') }}">Đồng hồ nữ</a></li>
                                     <li><a href="{{ URL('/contact') }}">Liên hệ</a></li>
-                                    <li class="login"><a href="{{ URL('/contact') }}"><i
+                                    <li class="login"><a href="{{ URL('/login') }}"><i
                                                 class="fad fa-user"></i>Đăng nhập</a></li>
                                 </div>
 
@@ -515,12 +515,19 @@
                 //     searchAjax(data);
                 //    }
                 // });
-                $('#searchAjaxProduct').blur(function(){
-                    searchAjax('');
+
+                $('#FormsearchAjaxProduct').submit(function(e){
+                    if($('#searchAjaxProduct').val() == ''){
+                         e.preventDefault();
+                       
+                    }
+                    
                 });
 
           
-
+                $('#searchAjaxProduct').blur(function(){
+                    searchAjax('');
+                });
                
             })();
                 

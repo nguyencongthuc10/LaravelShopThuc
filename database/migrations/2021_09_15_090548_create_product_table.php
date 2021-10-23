@@ -19,7 +19,7 @@ class CreateProductTable extends Migration
             $table->string('name_product');
             $table->string('slug_product');
             $table->string('price_product');
-            $table->string('discout_price_product');
+            $table->string('discount_price_product');
             $table->integer('status_product');
             $table->text('desc_product');
             $table->text('content_product');
@@ -27,7 +27,7 @@ class CreateProductTable extends Migration
             $table->string('detail1_image_product');
             $table->string('detail2_image_product');
             $table->string('detail3_image_product');
-            $table->string('detail3_image_product');   
+            $table->string('detail4_image_product');   
             $table->string('classify_product');  
             $table->integer('highlight_product');
             $table->timestamps();
