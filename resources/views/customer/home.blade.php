@@ -154,7 +154,8 @@
 
                                             <div class="btn-cart-detail">
                                                 <a href=""><button class="pr-cart"> <i class="fal fa-shopping-cart"></i></button></a>
-                                                <a href="{{URL('detail-product/' . $highlight_product->id) }}"><button class="pr-detail">Chi tiết <i class="far fa-angle-double-right"></i></button></a>
+                                                <a href="{{URL('detail-product/' . $highlight_product->slug_product) . '.html' }}"><button class="pr-detail">Chi tiết <i class="far fa-angle-double-right"></i></button></a>
+                                                {{-- <a href="{{ URL('detail-product/', [$highlight_product->slug_product, $highlight_product->id]) }}"><button class="pr-detail">Chi tiết <i class="far fa-angle-double-right"></i></button></a> --}}
                                             </div>
                                         </div>
 
@@ -238,7 +239,7 @@
 
                                             <div class="btn-cart-detail">
                                                 <a href=""><button class="pr-cart"> <i class="fal fa-shopping-cart"></i></button></a>
-                                                <a href="{{URL('detail-product/' . $new_product->id) }}"><button class="pr-detail">Chi tiết <i class="far fa-angle-double-right"></i></button></a>
+                                                <a href="{{URL('detail-product/' . $new_product->slug_product) . '.html' }}"><button class="pr-detail">Chi tiết <i class="far fa-angle-double-right"></i></button></a>
                                             </div>
                                         </div>
 
@@ -308,7 +309,7 @@
                                             </div>
                                             <div class="btn-cart-detail">
                                                 <a href=""><button class="pr-cart"> <i class="fal fa-shopping-cart"></i></button></a>
-                                                <a href="{{URL('detail-product/' . $discount_product->id) }}"><button class="pr-detail">Chi tiết <i class="far fa-angle-double-right"></i></button></a>
+                                                <a href="{{URL('detail-product/' . $discount_product->slug_product) . '.html' }}"><button class="pr-detail">Chi tiết <i class="far fa-angle-double-right"></i></button></a>
                                             </div>
                                         </div>
 
