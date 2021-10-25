@@ -38,8 +38,8 @@
 		</div>
 		<form method="post" action="{{URL('/login')}}">
             <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-	    	<input type="text" class="user" name="username" placeholder="Email hoặc số điện thoại" required="required" />
-	        <input type="password" class="pass" name="userpassword" placeholder="Mật khẩu" required="required" />
+	    	<input type="text" class="user" name="username" placeholder="Nhập Email của bạn" required="required" />
+	        <input type="password" class="pass" name="user_password" placeholder="Mật khẩu" required="required" />
         <div class="nho-mk">
 			<a href="{{URL('/register')}}">Đăng ký mới</a>	
 			<a href="{{URL('forgotPassword')}}">Quên mật khẩu</a>

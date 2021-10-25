@@ -37,8 +37,11 @@
             </div>
 			<form method="post" action="{{URL('/register')}}">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-				<input type="text" name="register_name" class="user" placeholder="Họ tên" required="required" />
-				<input type="text" name="register_phone_or_email" class="pass" placeholder="Email hoặc số điện thoại" required="required" />
+				<input type="text" name="register_name" class="user"
+                data-validation="name"
+                data-validation-error-msg="Vui lòng không để trống hoặc không nhập nhỏ hơn 2 kí tự"
+                 placeholder="Họ tên" required="required" />
+				<input type="email" name="register_phone_or_email" class="pass" placeholder="Nhập email của bạn" required="required" />
 				<input type="password" class="pass" name="register_pass" placeholder="Mật khẩu" required="required" />
 
 				<button type="submit" class="btn  btn-block btn-large btn-dn">Đăng ký</button>

@@ -1,5 +1,5 @@
 <?php
-
+use  Illuminate\Auth\Middleware\AdminMiddleware;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,30 +14,31 @@
 // =============================== Font End =============================================//
 // Home
 Route::get('/', 'HomeController@index');
-Route::get('/home', 'HomeController@index');
-Route::get('/contact', 'HomeController@contact');
-Route::get('/introduce', 'HomeController@introduce');
+Route::get('/home.html', 'HomeController@index');
+Route::get('/contact.html', 'HomeController@contact');
+Route::get('/introduce.html', 'HomeController@introduce');
 Route::post('/load-more-product','ProductController@loadMore');
 
 Route::get('/detail-product/{id}', 'ProductController@detail_product');
-Route::get('/watch-man', 'ProductController@watch');
+Route::get('/watch-man.html', 'ProductController@watch');
 Route::post('/watchAjax','ProductController@watchAjax');
 Route::post('/searchAjax','ProductController@searchAjax');
 Route::get('/searchProduct', 'ProductController@searchProduct');
 
 Route::get('/login', 'LoginController@login');
 Route::get('/register', 'LoginController@register');
+Route::get('/logout', 'LoginController@logout');
 Route::post('/register','LoginController@executedRegister');
 Route::post('/login','LoginController@executeLogin');
 // =============================== Back-end =============================================//
 // Admin 
-Route::get('/admin', 'AdminController@index');
+// Route::get('/admin', 'AdminController@index')->middleware('AdminMiddleware');
 Route::get('/dashboard', 'AdminController@index');
-
+Route::get('/admin', 'AdminController@index');
 // Product
 Route::get('/home-add-product', 'ProductController@home');
 Route::get('/edit-product/{id_product}', 'ProductController@edit');
-Route::post('/update-product{id_product}', 'ProductController@update');
+Route::post('/update-product/{id_product}', 'ProductController@update');
 Route::get('/all-product', 'ProductController@show_all');
 Route::post('/save-product/{id_product}', 'ProductController@save');
 Route::get('/delete-product/{id_product}', 'ProductController@delete');

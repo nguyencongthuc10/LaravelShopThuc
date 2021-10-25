@@ -54,12 +54,12 @@ class Handler extends ExceptionHandler
                 {
                 // not found
                 case 404:
-                return redirect()->guest('home');
+                return redirect()->guest('home.html');
                 break;
 
                 // internal error
                 case '500':
-                return redirect()->guest('home');
+                return redirect()->guest('home.html');
                 break;
 
                 default:

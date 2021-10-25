@@ -89,7 +89,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         <ul class="dropdown-menu extended logout">
                             <li><a href="#"><i class=" fa fa-suitcase"></i>Thông tin</a></li>
                             <li><a href="#"><i class="fa fa-cog"></i> Cài đặt</a></li>
-                            <li><a href="{{ URL('/logout_admin') }}"><i class="fa fa-key"></i> Đăng xuất</a></li>
+                            <li><a href="{{ URL('/logout') }}"><i class="fa fa-key"></i> Đăng xuất</a></li>
                         </ul>
                     </li>
                     <!-- user login dropdown end -->

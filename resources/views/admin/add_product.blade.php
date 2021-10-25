@@ -20,12 +20,12 @@
                                             data-validation-error-msg="Vui lòng không để trống hoặc không nhập nhỏ hơn 2 kí tự"
                                             placeholder="Nhập tên sản phẩm...">
                                     </div>
-                                    <div class="form-group">
+                                    {{-- <div class="form-group">
                                         <label for="exampleInputEmail1">Tên slug sản phẩm</label>
                                         <input type="text" class="form-control" id="slugProduct" name="add_slug_product"
                                             data-validation="length" data-validation-length="min2"
                                             data-validation-error-msg="Vui lòng không để trống hoặc không nhập nhỏ hơn 2 kí tự">
-                                        </div>
+                                        </div> --}}
                                         <div class="  form-group">
                                         <label for="exampleInputFile">Danh mục sản phẩm</label>
                                         <select name="brand_product" class="form-control input-sm m-bot15">

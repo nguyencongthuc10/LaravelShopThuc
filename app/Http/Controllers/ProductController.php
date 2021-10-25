@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Brand;
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
 use Session;
 
 session_start();
@@ -44,7 +46,7 @@ class ProductController extends Controller
 
         $add_product = new Product();
         $add_product->name_product = $request->add_name_product;
-        $add_product->slug_product = $request->add_slug_product;
+        $add_product->slug_product = Str::slug($request->add_name_product, '-') .'-'. Carbon::now('Asia/Ho_Chi_Minh')->timestamp;
         $add_product->price_product = $request->add_price_product;
         $add_product->discount_price_product = $request->add_discount_price_product;
         $add_product->desc_product = $request->add_desc_product;
@@ -136,7 +138,7 @@ class ProductController extends Controller
     {
         $update_product = Product::find($id);
         $update_product->name_product = $request->update_name_product;
-        $update_product->slug_product = $request->update_slug_product;
+  
         $update_product->price_product = $request->update_price_product;
         $update_product->discount_price_product = $request->update_discount_price_product;
         $update_product->desc_product = $request->update_desc_product;
@@ -285,13 +287,13 @@ class ProductController extends Controller
 
                                 <div class="btn-cart-detail">
                                 <a href=""><button class="pr-cart" id="idCart"> <i class="fal fa-shopping-cart"></i></button></a>
-                                <a href="' . URL('detail-product/' . $product_watch->id) . '"><button class="pr-detail">Chi tiết <i class="far fa-angle-double-right"></i></button></a>
+                                <a href="'. URL('detail-product/' . $product_watch->slug_product) . '.html' .'"><button class="pr-detail">Chi tiết <i class="far fa-angle-double-right"></i></button></a>
                                 </div>
                             </div>
 
                     </div>
                 </div>
-
+                
                 ';
             }
             foreach ($product_final as $product) {
@@ -317,13 +319,17 @@ class ProductController extends Controller
    
     }
     // Chi tiết sản phấm
-    public function detail_product(Request $request, $id)
+    public function detail_product(Request $request, $slug)
     {
-        $detail_product = Product::find($id);
-        $id_brand = $detail_product->brand->id;
-        $related = Product::where('status_product', '1')->where('id_brand', $id_brand)->orderBy('id', 'DESC')->whereNotIn('id',[$id])->take(4)->get();
-     
-        return view('customer/detail_product', compact('detail_product', 'related'));
+        $slug_final = trim($slug,".html");;
+        $detail_product1 = Product::where('slug_product', $slug_final)->get();
+        $id_brand;
+        foreach ($detail_product1 as $detail_product){
+            $id_brand = $detail_product->id;
+        }
+
+        $related = Product::where('status_product', '1')->where('id_brand', $id_brand)->orderBy('id', 'DESC')->whereNotIn('slug_product',[$slug_final])->take(4)->get();
+        return view('customer/detail_product', compact('detail_product1', 'related'));
 
     }
     // Phân loại sản phẩm
@@ -596,7 +602,7 @@ class ProductController extends Controller
 
                                 <div class="btn-cart-detail">
                                 <a href=""><button class="pr-cart" > <i class="fal fa-shopping-cart"></i></button></a>
-                                <a href="' . URL('detail-product/' . $product_watch->id) . '"><button class="pr-detail">Chi tiết <i class="far fa-angle-double-right"></i></button></a>
+                                <a href="'. URL('detail-product/' . $product_watch->slug_product) . '.html' .'"><button class="pr-detail">Chi tiết <i class="far fa-angle-double-right"></i></button></a>
                                 </div>
                             </div>
 
@@ -649,7 +655,7 @@ class ProductController extends Controller
             foreach($resultSearch as $resultForeach){
                 $result .= '
                 <li>
-                    <a href="' . URL('detail-product/' . $resultForeach->id) . '">
+                    <a href="'. URL('detail-product/' . $resultForeach->slug_product) . '.html' .'">
                         <img src="' . URL('public/updates/product/' . $resultForeach->image_product) . '" alt="'.$resultForeach->image_product.'">
                         <div class="search_nameandPrice">
                             <h3>' . $resultForeach->name_product . '</h3>

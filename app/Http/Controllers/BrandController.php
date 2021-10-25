@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Brand;
 use App\Http\Requests;
 use Session;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
 session_start();
 class BrandController extends Controller
 {
@@ -19,7 +21,7 @@ class BrandController extends Controller
         $data = $request->all();
         $save_brand = new Brand();
         $save_brand->name_brand = $data['add_name_brand'];
-        $save_brand->slug_brand	= $data['add_slug_brand'];
+        $save_brand->slug_brand	=Str::slug($request->add_name_brand, '-').'-'.Carbon::now('Asia/Ho_Chi_Minh')->timestamp;
         $save_brand->desc_brand = $data['add_desc_brand'];
         $save_brand->status_brand = $data['brand_product_status'];
         $get_img = $request->file('add_img_brand');
@@ -59,7 +61,7 @@ class BrandController extends Controller
         $all_brand = Brand::all();
         $update_brand = Brand::find($id);
         $update_brand->name_brand = $data['update_name_brand'];
-        $update_brand->slug_brand = $data['update_slug_brand'];
+        
         $update_brand->desc_brand = $data['update_desc_brand'];
         $update_brand->status_brand = $data['update_status_brand'];
         $get_img = $request->file('update_img_brand');

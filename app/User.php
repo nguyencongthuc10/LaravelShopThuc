@@ -17,7 +17,7 @@ class User extends Authenticatable
     protected $table = 'user1_table';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'name_user', 'email_or_phone_user', 'password_user','role',
+        'name_user', 'email_or_phone_user', 'password','role',
     ];
 
     /**
@@ -28,5 +28,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    public function getAuthPassword()
+    {
+        return $this->password;
+    }
 }
 

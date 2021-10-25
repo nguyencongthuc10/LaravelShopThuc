@@ -87,13 +87,13 @@
 
                                 </li>
                                 <div id="menu-1" class="menu-1">
-                                    <li><a href="{{ URL('/home') }}" style="color: #d54242;"><i
+                                    <li><a href="{{ URL('/home.html') }}" style="color: #d54242;"><i
                                                 style="margin-right: 5px;" class="fas fa-home"></i>Trang chủ</a></li>
-                                    <li><a href="{{ URL('/introduce') }}">Giới thiệu</a></li>
-                                    <li><a href="{{ URL('/watch-man') }}">Đồng hồ nam</a></li>
-                                    <li><a href="{{ URL('/watch-woman') }}">Đồng hồ nữ</a></li>
-                                    <li><a href="{{ URL('/contact') }}">Liên hệ</a></li>
-                                    <li class="login"><a href="{{ URL('/login') }}"><i
+                                    <li><a href="{{ URL('/introduce.html') }}">Giới thiệu</a></li>
+                                    <li><a href="{{ URL('/watch-man.html') }}">Đồng hồ nam</a></li>
+                                    <li><a href="{{ URL('/watch-woman.html') }}">Đồng hồ nữ</a></li>
+                                    <li><a href="{{ URL('/contact.html') }}">Liên hệ</a></li>
+                                    <li class="login"><a href="{{ URL('/logout') }}"><i
                                                 class="fad fa-user"></i>Đăng nhập</a></li>
                                 </div>
 
@@ -129,11 +129,11 @@
                             <div class="col-md-3 col-6 col-sm-6">
                                 <h2>Liên kết</h2>
                                 <div class="footer-left2">
-                                    <p><a href="{{ URL('/home') }}" style="color: #d54242;"></i>Trang chủ</a></p>
-                                    <p><a href="{{ URL('/introduce') }}">Giới thiệu</a></p>
-                                    <p><a href="{{ URL('/contact') }}">Đồng hồ nam</a></p>
-                                    <p><a href="{{ URL('/contact') }}">Đông hồ nữ</a></p>
-                                    <p><a href="{{ URL('/contact') }}">Liên hệ</a></p>
+                                    <p><a href="{{ URL('/home.html') }}" style="color: #d54242;"></i>Trang chủ</a></p>
+                                    <p><a href="{{ URL('/introduce.html') }}">Giới thiệu</a></p>
+                                    <p><a href="{{ URL('/watch-man.html') }}">Đồng hồ nam</a></p>
+                                    <p><a href="{{ URL('/watch-woman.html') }}">Đông hồ nữ</a></p>
+                                    <p><a href="{{ URL('/contact.html') }}">Liên hệ</a></p>
 
 
                                 </div>

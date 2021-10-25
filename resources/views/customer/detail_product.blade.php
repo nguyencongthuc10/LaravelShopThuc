@@ -2,6 +2,7 @@
 @section('noidung')
 <div class="detail-product">
 	<div class="container">
+		@foreach($detail_product1 as $detail_product)
 		<div class="row-detail">
 			<div class="col-left col-detail">
 				<div class="zoom-img-pr">
@@ -128,7 +129,7 @@
 				</div>
 			</div>
 		</div>
-
+		@endforeach
 
 
 		<!-- danh gia -->

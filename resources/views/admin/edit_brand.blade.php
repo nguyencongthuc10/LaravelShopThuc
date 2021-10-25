@@ -18,13 +18,13 @@
                                     data-validation-length="min2" data-validation-error-msg="Ký tự không nhỏ hơn 2"
                                     name="update_name_brand" value="{{ $info_edit->name_brand }}">
                             </div>
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label for="exampleInputEmail1">Tên Slug thương hiệu</label>
                                 <input type="text" class="form-control" data-validation="length" id="slugBrand"
                                     data-validation-length="min2" name="update_slug_brand"
                                     data-validation-error-msg="Ký tự không nhỏ hơn 2"
                                     value="{{ $info_edit->slug_brand }}">
-                            </div>
+                            </div> --}}
 
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Mô tả thương hiệu</label>

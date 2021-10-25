@@ -21,14 +21,14 @@
                                         data-validation-error-msg="Vui lòng không để trống hoặc không nhập nhỏ hơn 2 kí tự"
                                             name="update_name_product" value="{{ $edit_product->name_product }}">
                                     </div>
-                                    <div class="form-group">
+                                    {{-- <div class="form-group">
                                         <label for="exampleInputEmail1">Tên Slug sản phẩm</label>
                                         <input type="text" class="form-control" id="slugProduct"
                                            name="update_slug_product"
                                             data-validation="length"  data-validation-length = "min2"
                                             data-validation-error-msg="Vui lòng không để trống hoặc không nhập nhỏ hơn 2 kí tự"
                                             value="{{ $edit_product->slug_product }}">
-                                    </div>
+                                    </div> --}}
                                     <div class="form-group">
                                         <label for="exampleInputFile">Danh mục sản phẩm</label>
                                         <select name="brand_product" class="form-control input-sm m-bot15">

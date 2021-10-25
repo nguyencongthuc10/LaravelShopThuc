@@ -18,13 +18,13 @@
                                 data-validation-error-msg="Vui lòng không để trống hoặc không nhập nhỏ hơn 2 kí tự"
                                     name="add_name_brand" placeholder="Nhập tên danh mục...">
                             </div>
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label for="exampleInputEmail1">Tên Slug thương hiệu</label>
                                 <input type="text" class="form-control" id="slugBrand" 
                                    name="add_slug_brand" data-validation="length"  data-validation-length = "min2"
                                    data-validation-error-msg="Vui lòng không để trống hoặc không nhập nhỏ hơn 2 kí tự"
                                    >
-                            </div>
+                            </div> --}}
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Mô tả thương hiệu</label>
                                 <textarea type="text" style="resize: none;" rows="8" class="form-control"

@@ -39,16 +39,17 @@ class LoginController extends Controller
     public function executeLogin(Request $request){
         $login = [
             'email_or_phone_user' => $request->username,
-            'password' => $request->userpassword,
+            'password' => $request->user_password,
             'role' => 0
         ];
         $login1 = [
             'email_or_phone_user' => $request->username,
-            'password' => $request->userpassword,
-            // 'role' => 1
+            'password' => $request->user_password,
+            'role' => 1
         ];
       
-      
+        
+       
         if (Auth::attempt($login)) {
             $show_new = Product::orderBy('id', 'desc')->where('status_product', '1')->take('4')->get();
             $show_highlight = Product::orderBy('id', 'desc')->where('status_product', '1')->where('highlight_product', 1)->take('4')->get();
@@ -62,5 +63,10 @@ class LoginController extends Controller
            
             return redirect()->back()->with('status', 'Email hoặc Password không chính xác');
         }
+        
+    }
+    public function logout(){
+        Auth::logout();
+        return redirect('/login');
     }
 }
