@@ -69,4 +69,15 @@ class LoginController extends Controller
         Auth::logout();
         return redirect('/login');
     }
+    public function ajaxCheckEmailExit(Request $request){
+        $data = $request->data;
+        $output;
+        $checkEmail = User::where('email_or_phone_user',$data)->get();
+   
+        if($checkEmail->isEmpty()){
+            echo $output = '';
+        }else{
+            echo $output = 1;;
+        }
+    }
 }

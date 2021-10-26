@@ -95,6 +95,18 @@
                                     <li><a href="{{ URL('/contact.html') }}">Liên hệ</a></li>
                                     <li class="login"><a href="{{ URL('/logout') }}"><i
                                                 class="fad fa-user"></i>Đăng nhập</a></li>
+                                    {{-- <li class="dropdown loginindex">
+                                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                            <img alt="" src="http://localhost:8080/LaravelShopThuc/public/backend/images/2.png">
+                                            <span class="username">Ta la nguyen cong thuc pro player dinh cao cua the gioi</span>   
+                                            <b class="caret"></b>
+                                        </a>
+                                        <ul class="dropdown-menu extended logout">
+                                            <li><a href="#" class="mauchulogin"><i class=" fa fa-suitcase"></i>Thông tin</a></li>
+                                            <li><a href="#" class="mauchulogin"><i class="fa fa-cog"></i> Cài đặt</a></li>
+                                            <li><a href="http://localhost:8080/LaravelShopThuc/logout" class="mauchulogin"><i class="fa fa-key"></i> Đăng xuất</a></li>
+                                        </ul>
+                                    </li> --}}
                                 </div>
 
                             </ul>
@@ -532,4 +544,5 @@
             })();
                 
         </script>
+       
     </body>

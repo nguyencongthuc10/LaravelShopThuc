@@ -35,16 +35,15 @@
                 <a href="{{URL('/login')}}"><i class="far fa-arrow-left"  data-toggle="tooltip"   data-html="true" data-placement="right" title="<h6>Quay lại</h6>"></i></a>
                 <h3>Đăng kí</h3>
             </div>
-			<form method="post" action="{{URL('/register')}}">
+			<form method="post" action="{{URL('/register')}}" id="registerForm">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-				<input type="text" name="register_name" class="user"
-                data-validation="name"
-                data-validation-error-msg="Vui lòng không để trống hoặc không nhập nhỏ hơn 2 kí tự"
-                 placeholder="Họ tên" required="required" />
-				<input type="email" name="register_phone_or_email" class="pass" placeholder="Nhập email của bạn" required="required" />
+                <p style="text-align:center; color:red" id="checkEmailExit"></p>
+				<input type="text" name="register_name" class="user" placeholder="Họ tên" required="required" />
+				<input type="text" name="register_phone_or_email"  id="emailRegsiterExit" class="pass" placeholder="Nhập email của bạn" required="required" />
 				<input type="password" class="pass" name="register_pass" placeholder="Mật khẩu" required="required" />
-
-				<button type="submit" class="btn  btn-block btn-large btn-dn">Đăng ký</button>
+                
+				<button type="submit" id="btnRegister" class="btn  btn-block btn-large btn-dn">Đăng ký</button>
+                
 				<span class="or">Or</span>
 				<div class="button-mxh">
                     <a href="#"><img src="{{URL('public/fontend/images/fb.png')}}" alt="facebook" data-toggle="tooltip"   data-html="true" data-placement="bottom" title="<h6>Đăng nhập với Facebook</h6>"></a>
@@ -60,7 +59,7 @@
 <script src="{{ asset('public/fontend/js/jquery.counterup.min.js') }}"></script>
 <script src="{{ asset('public/fontend/js/swiper.js') }}"></script>
 <script src="{{ asset('public/fontend/js/jquery.magnify.js') }}"></script>
-
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="{{ asset('public/fontend/js/xzoom.js') }}"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.1/umd/react.production.min.js">
 </script>
@@ -69,6 +68,41 @@
       $('[data-toggle="tooltip"]').tooltip();   
     }); 
    </script> 
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });    
+        
+        function CheckEmailExit($data) {
+                $.ajax({
+                    method: 'post',
+                    url: '{{ url('/ajaxCheckEmailExit') }}',
+                    
+                    data: {
+
+                        data: $data, 
+                    },
+                    success: function(data,e) {  
+                        if(data == ''){
+                            $('#checkEmailExit').html('');
+                            
+                        }else{
+                            $('#checkEmailExit').html('Email đã tồn tại');
+     
+                        }
+                    }
+                });
+            }
+
+        $("#emailRegsiterExit").blur(function(){
+            var emailRegsiter = $(this).val();
+            CheckEmailExit(emailRegsiter);
+        });
+
+       
+    </script>
 </body>
 
 

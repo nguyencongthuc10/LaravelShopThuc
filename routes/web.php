@@ -24,12 +24,14 @@ Route::get('/watch-man.html', 'ProductController@watch');
 Route::post('/watchAjax','ProductController@watchAjax');
 Route::post('/searchAjax','ProductController@searchAjax');
 Route::get('/searchProduct', 'ProductController@searchProduct');
-
+// Login , Logout, register
 Route::get('/login', 'LoginController@login');
 Route::get('/register', 'LoginController@register');
 Route::get('/logout', 'LoginController@logout');
 Route::post('/register','LoginController@executedRegister');
 Route::post('/login','LoginController@executeLogin');
+
+Route::post('/ajaxCheckEmailExit', 'LoginController@ajaxCheckEmailExit');
 // =============================== Back-end =============================================//
 // Admin 
 // Route::get('/admin', 'AdminController@index')->middleware('AdminMiddleware');
