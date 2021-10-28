@@ -71,7 +71,7 @@
                             <ul>
                                 <li>
                                     <div class="search">
-                                        <form action="{{url('/searchProduct')}}" method="get" id="FormsearchAjaxProduct">
+                                        <form action="{{url('/searchProduct.html')}}" method="get" id="FormsearchAjaxProduct">
                                             
                                             <label for="search"></label>
                                             <input class="input" id="searchAjaxProduct"  name="keyword" type="search" class="form-control" placeholder="Nhập tìm kiếm">
@@ -93,20 +93,29 @@
                                     <li><a href="{{ URL('/watch-man.html') }}">Đồng hồ nam</a></li>
                                     <li><a href="{{ URL('/watch-woman.html') }}">Đồng hồ nữ</a></li>
                                     <li><a href="{{ URL('/contact.html') }}">Liên hệ</a></li>
-                                    <li class="login"><a href="{{ URL('/logout') }}"><i
-                                                class="fad fa-user"></i>Đăng nhập</a></li>
-                                    {{-- <li class="dropdown loginindex">
-                                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                            <img alt="" src="http://localhost:8080/LaravelShopThuc/public/backend/images/2.png">
-                                            <span class="username">Ta la nguyen cong thuc pro player dinh cao cua the gioi</span>   
-                                            <b class="caret"></b>
-                                        </a>
-                                        <ul class="dropdown-menu extended logout">
-                                            <li><a href="#" class="mauchulogin"><i class=" fa fa-suitcase"></i>Thông tin</a></li>
-                                            <li><a href="#" class="mauchulogin"><i class="fa fa-cog"></i> Cài đặt</a></li>
-                                            <li><a href="http://localhost:8080/LaravelShopThuc/logout" class="mauchulogin"><i class="fa fa-key"></i> Đăng xuất</a></li>
-                                        </ul>
-                                    </li> --}}
+                                   
+
+                                    @if(Auth::check())
+                                    <li class="dropdown loginindex">
+                                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                        <img alt="" src="http://localhost:8080/LaravelShopThuc/public/backend/images/2.png">
+                                        <span class="username">{{Auth::user()->name_user}}</span>   
+                                        <b class="caret"></b>
+                                    </a>
+                                    <ul class="dropdown-menu extended logout">
+                                        <li><a href="#" class="mauchulogin"><i class=" fa fa-suitcase"></i>Thông tin</a></li>
+                                        <li><a href="#" class="mauchulogin"><i class="fa fa-cog"></i> Cài đặt</a></li>
+                                        <li><a href="{{ URL('/logout.html') }}" class="mauchulogin"><i class="fa fa-key"></i> Đăng xuất</a></li>
+                                    </ul>
+                                    </li>
+                                        
+                                    @else
+                                    <li class="login"><a href="{{ URL('/login.html') }}">
+                                        <i class="fad fa-user"></i>Đăng nhập</a></li>
+   
+                                    @endif
+                                    
+                                    
                                 </div>
 
                             </ul>
@@ -544,5 +553,11 @@
             })();
                 
         </script>
-       
+       <script>
+           $('.addtocart').click(function(e){
+               e.preventDefault();
+                alert('asf');
+                alert($(this).data('id'));
+           });
+       </script>
     </body>

@@ -59,7 +59,7 @@
         
                                             <div class="btn-cart-detail">
                                                 <a href=""><button class="pr-cart"> <i class="fal fa-shopping-cart"></i></button></a>
-                                                <a href="{{URL('detail-product/' . $searchProduct->id) }}"><button class="pr-detail" href="{{URL('detail-product/' . $searchProduct->id) }}" type="button">Chi tiết <i class="far fa-angle-double-right"></i></button></a>
+                                                <a href="{{URL('detail-product/' . $searchProduct->slug_product) . '.html' }}"><button class="pr-detail" href="{{URL('detail-product/' . $searchProduct->slug_product) . '.html' }}" type="button">Chi tiết <i class="far fa-angle-double-right"></i></button></a>
                                             </div>
                                         </div>
                                     </form>

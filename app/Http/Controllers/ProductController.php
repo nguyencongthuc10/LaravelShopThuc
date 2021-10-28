@@ -177,7 +177,6 @@ class ProductController extends Controller
         $update_product->save();
         Session::put('messge_cnsp', 'Cập nhật sản phẩm ' . $request->update_name_product . ' thành công.');
         return Redirect('/products');
-
     }
 
     /**

@@ -3,9 +3,13 @@
     margin: 0 auto;
 }
 
+.invalid {
+    color: red;
+}
+
 .shopthuc .header-banner .menu .loginindex {
     position: absolute;
-    top: 0;
+    top: 8px;
     right: 112px;
 }
 
@@ -1385,7 +1389,7 @@ h3.title-comm:before {
     
     .shopthuc .header-banner .menu .loginindex {
         position: initial;
-        opacity: 1 !important;
+        display: block !important;
     }
     
     .shopthuc .header-banner .menu .loginindex ul li {

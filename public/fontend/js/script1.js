@@ -98,9 +98,11 @@
      if ($(this).scrollTop() >= 44) {
          $('#menu-1').addClass('st-navbar-desktop-fixed');
          $('.login').css("display", "none");
+         $('.loginindex').css("display", "none");
      } else {
          $('#menu-1').removeClass('st-navbar-desktop-fixed');
          $('.login').css("display", "block");
+         $('.loginindex').css("display", "block");
      }
  });
 

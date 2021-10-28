@@ -46,6 +46,10 @@ class Handler extends ExceptionHandler
     // {
     //     return parent::render($request, $exception);
     // }
+    // nếu không tòn tại route tự chạy về home
+   
+
+
     public function render($request, Exception $e)
     {
         if($this->isHttpException($e))

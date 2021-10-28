@@ -33,16 +33,34 @@
 	<div class="login-page">
 	<div class="login-content">
 		<div class="login-header">
-			<a href="{{URL('/home')}}"><i class="far fa-arrow-left"  data-toggle="tooltip"   data-html="true" data-placement="right" title="<h6>Quay lại</h6>"></i></a>
+			<a href="{{URL('/home.html')}}"><i class="far fa-arrow-left"  data-toggle="tooltip"   data-html="true" data-placement="right" title="<h6>Quay lại</h6>"></i></a>
 			<h3>Đăng nhập</h3>
 		</div>
-		<form method="post" action="{{URL('/login')}}">
+
+        @if (Session::has('message_register'))
+            <div class="alert alert-info">{{ Session::get('message_register') }}</div>
+           <?php  Session::forget('message_register'); ?>
+           
+        @endif 
+        @if (Session::has('status'))
+            <div class="alert alert-info">{{ Session::get('status') }}</div>
+            <?php  Session::forget('status'); ?>
+        @endif 
+        
+		<form method="post" action="{{URL('/login.html')}}" id="loginForm">
             <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-	    	<input type="text" class="user" name="username" placeholder="Nhập Email của bạn" required="required" />
-	        <input type="password" class="pass" name="user_password" placeholder="Mật khẩu" required="required" />
+            <div class="form-group">
+                <input type="text" class="user" name="username" id="nameLogin" placeholder="Nhập Email của bạn" required="required" />
+                <span class="form-message"></span>
+            </div>
+            <div class="form-group">
+                <input type="password" class="pass" name="user_password" id="passLogin" placeholder="Mật khẩu" required="required" />
+                <span class="form-message"></span>
+            </div>
+	        
         <div class="nho-mk">
-			<a href="{{URL('/register')}}">Đăng ký mới</a>	
-			<a href="{{URL('forgotPassword')}}">Quên mật khẩu</a>
+			<a href="{{URL('/register.html')}}">Đăng ký mới</a>	
+			<a href="{{URL('forgotPassword.html')}}">Quên mật khẩu</a>
         </div>
         <button type="submit" class="btn  btn-block btn-large btn-dn">Đăng nhập</button>
         <span class="or">Or</span>
@@ -56,7 +74,7 @@
 <script src="{{ asset('public/fontend/js/jquery.js') }}"></script>
 <script src="{{ asset('public/fontend/js/jquery-3.5.1.min.js') }}"></script>
 <script src="{{ asset('public/fontend/js/bootstrap.min.js') }}"></script>
-
+<script src="{{ asset('public/fontend/js/validatortuiche.js') }}"></script>
 <script src="{{ asset('public/fontend/js/jquery.counterup.min.js') }}"></script>
 <script src="{{ asset('public/fontend/js/swiper.js') }}"></script>
 <script src="{{ asset('public/fontend/js/jquery.magnify.js') }}"></script>
@@ -68,6 +86,22 @@
     $(document).ready(function(){
       $('[data-toggle="tooltip"]').tooltip();   
     }); 
+    Validator({
+            form: '#loginForm',
+            errorMessage: '.form-message',
+            rules: [
+                Validator.isRequired('#nameLogin','Vui lòng không để trống tên'),    
+
+                Validator.isRequired('#passLogin','Vui lòng không để trống mật khẩu'),
+                
+                // Validator.isConfirmed('#password_confirmed', function() {
+                //     return trường cần giông nhau;
+                // }, 'message lỗii'),
+                // hàm check Email invalid
+                // truyền URL xử lý AJAX 
+                // Validator.isEmailInvalid('#emailRegsiterExit','{{ url('/ajaxCheckEmailExit') }}','Email đã tồn tại'),
+            ]
+    });
    </script> 
 </body>
 

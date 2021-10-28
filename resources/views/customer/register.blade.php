@@ -32,15 +32,26 @@
     <div class="login-page">
 		<div class="login-content">
 			<div class="login-header">
-                <a href="{{URL('/login')}}"><i class="far fa-arrow-left"  data-toggle="tooltip"   data-html="true" data-placement="right" title="<h6>Quay lại</h6>"></i></a>
+                <a href="{{URL('/login.html')}}"><i class="far fa-arrow-left"  data-toggle="tooltip"   data-html="true" data-placement="right" title="<h6>Quay lại</h6>"></i></a>
                 <h3>Đăng kí</h3>
             </div>
-			<form method="post" action="{{URL('/register')}}" id="registerForm">
+			<form method="post" action="{{URL('/register.html')}}" id="registerForm">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                 <p style="text-align:center; color:red" id="checkEmailExit"></p>
-				<input type="text" name="register_name" class="user" placeholder="Họ tên" required="required" />
-				<input type="text" name="register_phone_or_email"  id="emailRegsiterExit" class="pass" placeholder="Nhập email của bạn" required="required" />
-				<input type="password" class="pass" name="register_pass" placeholder="Mật khẩu" required="required" />
+                <div class="form-group">
+                    <input type="text" name="register_name" class="user" id="registerName" placeholder="Họ tên" required="required" />
+                    <span class="form-message"></span>
+                </div>
+				<div class="form-group">
+                    <input type="text" name="register_phone_or_email"  id="emailRegsiterExit" class="pass" placeholder="Nhập email của bạn" required="required" />
+                    <span class="form-message"></span>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="pass" name="register_pass" id="registerPass" placeholder="Mật khẩu" required="required" />
+                <span class="form-message"></span>
+                </div>
+				
+				
                 
 				<button type="submit" id="btnRegister" class="btn  btn-block btn-large btn-dn">Đăng ký</button>
                 
@@ -55,13 +66,14 @@
 <script src="{{ asset('public/fontend/js/jquery.js') }}"></script>
 <script src="{{ asset('public/fontend/js/jquery-3.5.1.min.js') }}"></script>
 <script src="{{ asset('public/fontend/js/bootstrap.min.js') }}"></script>
-
+<script src="{{ asset('public/fontend/js/validatortuiche.js') }}"></script>
 <script src="{{ asset('public/fontend/js/jquery.counterup.min.js') }}"></script>
 <script src="{{ asset('public/fontend/js/swiper.js') }}"></script>
 <script src="{{ asset('public/fontend/js/jquery.magnify.js') }}"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="{{ asset('public/fontend/js/xzoom.js') }}"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.1/umd/react.production.min.js">
+
 </script>
     <script>
     $(document).ready(function(){
@@ -74,34 +86,31 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });    
-        
-        function CheckEmailExit($data) {
-                $.ajax({
-                    method: 'post',
-                    url: '{{ url('/ajaxCheckEmailExit') }}',
-                    
-                    data: {
+         
+    </script>
+    <script>
+        Validator({
+            form: '#registerForm',
+            errorMessage: '.form-message',
+            rules: [
+                Validator.isRequired('#registerName','Vui lòng không để trống tên'),
+                Validator.isNameField('#registerName','Tên không hợp lệ'),
+                Validator.isMinlength('#registerName', 2,'Tên không nhỏ hơn 2 kí tự'),
+                Validator.isMaxlength('#registerName', 25,'Tên không lớn hơn 25 kí tự'),
+               
+                Validator.isRequired('#emailRegsiterExit','Vui lòng không để trống Email'),
+                Validator.isEmail('#emailRegsiterExit'),
 
-                        data: $data, 
-                    },
-                    success: function(data,e) {  
-                        if(data == ''){
-                            $('#checkEmailExit').html('');
-                            
-                        }else{
-                            $('#checkEmailExit').html('Email đã tồn tại');
-     
-                        }
-                    }
-                });
-            }
-
-        $("#emailRegsiterExit").blur(function(){
-            var emailRegsiter = $(this).val();
-            CheckEmailExit(emailRegsiter);
+                Validator.isRequired('#registerPass','Vui lòng không để trống mật khẩu'),
+                Validator.isMinlength('#registerPass',6,'Mật Khẩu không ngắn hơn 6 ký tự'),
+                // Validator.isConfirmed('#password_confirmed', function() {
+                //     return trường cần giông nhau;
+                // }, 'message lỗii'),
+                // hàm check Email invalid
+                // truyền URL xử lý AJAX 
+                Validator.isEmailInvalid('#emailRegsiterExit','{{ url('/ajaxCheckEmailExit') }}','Email đã tồn tại'),
+            ]
         });
-
-       
     </script>
 </body>
 

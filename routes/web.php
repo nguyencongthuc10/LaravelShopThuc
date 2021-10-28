@@ -1,5 +1,6 @@
 <?php
 use  Illuminate\Auth\Middleware\AdminMiddleware;
+use  Illuminate\Auth\Middleware\CustomerMiddleware;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,24 +13,30 @@ use  Illuminate\Auth\Middleware\AdminMiddleware;
 */
 
 // =============================== Font End =============================================//
+Route::group(['middleware' => ['CustomerMiddleware']], function () {
+    Route::get('/', 'HomeController@index');
+    Route::get('/home.html', 'HomeController@index');
+    Route::get('/contact.html', 'HomeController@contact');
+    Route::get('/introduce.html', 'HomeController@introduce');
+    Route::get('/detail-product/{id}.html', 'ProductController@detail_product');
+    Route::get('/watch-man.html', 'ProductController@watch');
+    Route::get('/searchProduct.html', 'ProductController@searchProduct');
+});
 // Home
-Route::get('/', 'HomeController@index');
-Route::get('/home.html', 'HomeController@index');
-Route::get('/contact.html', 'HomeController@contact');
-Route::get('/introduce.html', 'HomeController@introduce');
+
 Route::post('/load-more-product','ProductController@loadMore');
 
-Route::get('/detail-product/{id}', 'ProductController@detail_product');
-Route::get('/watch-man.html', 'ProductController@watch');
+
+
 Route::post('/watchAjax','ProductController@watchAjax');
 Route::post('/searchAjax','ProductController@searchAjax');
-Route::get('/searchProduct', 'ProductController@searchProduct');
+
 // Login , Logout, register
-Route::get('/login', 'LoginController@login');
-Route::get('/register', 'LoginController@register');
-Route::get('/logout', 'LoginController@logout');
-Route::post('/register','LoginController@executedRegister');
-Route::post('/login','LoginController@executeLogin');
+Route::get('/login.html', 'LoginController@login');
+Route::get('/register.html', 'LoginController@register');
+Route::get('/logout.html', 'LoginController@logout');
+Route::post('/register.html','LoginController@executedRegister');
+Route::post('/login.html','LoginController@executeLogin');
 
 Route::post('/ajaxCheckEmailExit', 'LoginController@ajaxCheckEmailExit');
 // =============================== Back-end =============================================//
