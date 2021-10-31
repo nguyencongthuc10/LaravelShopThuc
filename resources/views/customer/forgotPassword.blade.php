@@ -33,41 +33,19 @@
 	<div class="login-page">
 	<div class="login-content">
 		<div class="login-header">
-			<a href="{{URL('/home.html')}}"><i class="far fa-arrow-left"  data-toggle="tooltip"   data-html="true" data-placement="right" title="<h6>Quay lại</h6>"></i></a>
-			<h3>Đăng nhập</h3>
+			<a href="{{URL('/login.html')}}"><i class="far fa-arrow-left"  data-toggle="tooltip"   data-html="true" data-placement="right" title="<h6>Quay lại</h6>"></i></a>
+			<h3>Lấy mật khẩu</h3>
 		</div>
-      
-        @if (Session::has('message_register'))
-            <div class="alert alert-info">{{ Session::get('message_register') }}</div>
-           <?php  Session::forget('message_register'); ?>
-           
-        @endif 
-        @if (Session::has('status'))
-            <div class="alert alert-info">{{ Session::get('status') }}</div>
-            <?php  Session::forget('status'); ?>
-        @endif      
+
         
-		<form method="post" action="{{URL('/login.html')}}" id="loginForm">
+		<form method="post" action="{{URL('/forgotPassword.html')}}" id="forgotPasswordForm">
             <input type="hidden" name="_token" value="{{ csrf_token() }}" />
             <div class="form-group">
-                <input type="text" class="user" name="username" id="nameLogin" placeholder="Nhập Email của bạn" required="required" />
+                <input type="text" class="user" name="emailForgotPassword" id="nameForgotPassword" placeholder="Nhập Email của bạn" required="required" />
                 <span class="form-message"></span>
             </div>
-            <div class="form-group">
-                <input type="password" class="pass" name="user_password" id="passLogin" placeholder="Mật khẩu" required="required" />
-                <span class="form-message"></span>
-            </div>
-	        
-        <div class="nho-mk">
-			<a href="{{URL('/register.html')}}">Đăng ký mới</a>	
-			<a href="{{URL('/forgotPassword.html')}}">Quên mật khẩu</a>
-        </div>
-        <button type="submit" class="btn  btn-block btn-large btn-dn">Đăng nhập</button>
-        <span class="or">Or</span>
-        <div class="button-mxh">
-        	<a href="#"><img src="{{URL('public/fontend/images/fb.png')}}" alt="facebook" data-toggle="tooltip"   data-html="true" data-placement="bottom" title="<h6>Đăng nhập với Facebook</h6>"></a>
-        	<a href="#"><img src="{{URL('public/fontend/images/google.png')}}" alt="google" data-toggle="tooltip" data-html="true" data-placement="bottom" title="<h6>Đăng nhập với Google</h6>"></a>
-        </div>
+        <button type="submit" class="btn  btn-block btn-large btn-dn">Lấy mật khẩu</button>
+       
     </form>
 	</div>
 </div>
@@ -87,19 +65,13 @@
       $('[data-toggle="tooltip"]').tooltip();   
     }); 
     Validator({
-            form: '#loginForm',
+            form: '#forgotPasswordForm',
             errorMessage: '.form-message',
             rules: [
-                Validator.isRequired('#nameLogin','Vui lòng không để trống tên'),    
-
-                Validator.isRequired('#passLogin','Vui lòng không để trống mật khẩu'),
-                
-                // Validator.isConfirmed('#password_confirmed', function() {
-                //     return trường cần giông nhau;
-                // }, 'message lỗii'),
-                // hàm check Email invalid
-                // truyền URL xử lý AJAX 
-                // Validator.isEmailInvalid('#emailRegsiterExit','{{ url('/ajaxCheckEmailExit') }}','Email đã tồn tại'),
+                Validator.isRequired('#nameForgotPassword','Vui lòng không để trống tên'),     
+                Validator.isRequired('#nameForgotPassword','Vui lòng không để trống tên'),  
+                // kiểm tra email không tòn tại
+                Validator.isEmailNotInvalid('#nameForgotPassword','{{ url('/ajaxCheckEmailExit') }}','Tài khoản không tồn tại')  
             ]
     });
    </script> 

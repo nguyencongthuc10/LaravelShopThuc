@@ -1,6 +1,3 @@
-// dối tượng validator
-
-
 function Validator(options) {
     var selectorRule = {};
 
@@ -159,6 +156,70 @@ Validator.isEmailInvalid = function(selector, url, message) {
             return dataAjax == 1 ? message || 'Tên không hợp lệ' : undefined;
 
 
+        }
+    }
+}
+
+
+Validator.isEmailNotInvalid = function(selector, url, message) {
+    var dataAjax;
+    return {
+        selector: selector,
+        test: function(value) {
+            $.ajax({
+                method: 'post',
+                url: url,
+                async: false,
+                data: {
+                    data: value,
+                },
+                success: function(data1) {
+
+                    dataAjax = data1;
+                }
+
+            });
+
+            return dataAjax == 0 ? message || 'Tài khoản không tồn tại' : undefined;
+
+
+        }
+    }
+
+}
+Validator.isPasswordNotSame = function(selector, url, message) {
+    var dataAjax;
+    return {
+        selector: selector,
+        test: function(value) {
+            $.ajax({
+                method: 'post',
+                url: url,
+                async: false,
+                data: {
+                    data: value,
+                },
+                success: function(data1) {
+
+                    dataAjax = data1;
+                }
+
+            });
+
+            return dataAjax == 0 ? message || 'Tài khoản không tồn tại' : undefined;
+
+
+        }
+    }
+
+}
+
+Validator.isNumber = function(selector, message) {
+    return {
+        selector: selector,
+        test: function(value) {
+            regex = /^[0-9]*$/;
+            return regex.test(value) ? undefined : message || 'Vui lòng nhập số'
         }
     }
 }

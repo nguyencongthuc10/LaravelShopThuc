@@ -104,7 +104,7 @@
                                     </a>
                                     <ul class="dropdown-menu extended logout">
                                         <li><a href="#" class="mauchulogin"><i class=" fa fa-suitcase"></i>Thông tin</a></li>
-                                        <li><a href="#" class="mauchulogin"><i class="fa fa-cog"></i> Cài đặt</a></li>
+                                        <li><a href="{{URL('/changePass/doi-mat-khau.html')}}" class="mauchulogin"><i class="fa fa-cog"></i>Đổi mật khẩu</a></li>
                                         <li><a href="{{ URL('/logout.html') }}" class="mauchulogin"><i class="fa fa-key"></i> Đăng xuất</a></li>
                                     </ul>
                                     </li>

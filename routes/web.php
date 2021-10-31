@@ -31,14 +31,22 @@ Route::post('/load-more-product','ProductController@loadMore');
 Route::post('/watchAjax','ProductController@watchAjax');
 Route::post('/searchAjax','ProductController@searchAjax');
 
+
 // Login , Logout, register
 Route::get('/login.html', 'LoginController@login');
 Route::get('/register.html', 'LoginController@register');
 Route::get('/logout.html', 'LoginController@logout');
+Route::get('/forgotPassword.html','LoginController@forgotPassword');
 Route::post('/register.html','LoginController@executedRegister');
 Route::post('/login.html','LoginController@executeLogin');
-
-Route::post('/ajaxCheckEmailExit', 'LoginController@ajaxCheckEmailExit');
+Route::post('/forgotPassword.html','LoginController@executeForgotPassword');
+Route::get('/OTPforgotPassword/{id}.html','LoginController@OTPexecuteForgotPassword');
+Route::get('/changePass/{id}.html','LoginController@changePass');
+Route::post('/changePass.html','LoginController@changePassPost');
+Route::post('/confirmFotgot.html', 'LoginController@confirmFotgot');
+// check mail exist
+Route::post('/ajaxCheckEmailExit', 'ValidateController@ajaxCheckEmailExit');
+Route::post('/ajaxCheckPasswordNotSame', 'ValidateController@ajaxCheckPasswordNotSame');
 // =============================== Back-end =============================================//
 // Admin 
 // Route::get('/admin', 'AdminController@index')->middleware('AdminMiddleware');

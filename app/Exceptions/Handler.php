@@ -65,6 +65,11 @@ class Handler extends ExceptionHandler
                 case '500':
                 return redirect()->guest('home.html');
                 break;
+                
+                case '405':
+                    return redirect()->guest('home.html');
+                    break;
+
 
                 default:
                     return $this->renderHttpException($e);
