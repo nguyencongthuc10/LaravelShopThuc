@@ -3,6 +3,24 @@
     margin: 0 auto;
 }
 
+.nhanxet__button {
+    margin-top: 20px;
+    outline: none;
+    text-transform: uppercase;
+    padding: 8px 20px;
+    background-color: #c89979;
+    color: #fff;
+    border: 1px solid transparent;
+}
+
+.nhanxet__button:hover {
+    background: #dfa47c;
+}
+
+.nhanxet__button:active {
+    background: #f28d48;
+}
+
 .invalid {
     color: red;
 }

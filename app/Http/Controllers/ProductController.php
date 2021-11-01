@@ -285,7 +285,7 @@ class ProductController extends Controller
                                 </div>
 
                                 <div class="btn-cart-detail">
-                                <a href=""><button class="pr-cart" id="idCart"> <i class="fal fa-shopping-cart"></i></button></a>
+                                <a href="" class="addtocart" data-id="'.$product_watch->id.'" onclick="AddCartAjax('.$product_watch->id.')"><button class="pr-cart" id="idCart"> <i class="fal fa-shopping-cart"></i></button></a>
                                 <a href="'. URL('detail-product/' . $product_watch->slug_product) . '.html' .'"><button class="pr-detail">Chi tiết <i class="far fa-angle-double-right"></i></button></a>
                                 </div>
                             </div>
@@ -600,7 +600,7 @@ class ProductController extends Controller
                                 </div>
 
                                 <div class="btn-cart-detail">
-                                <a href=""><button class="pr-cart" > <i class="fal fa-shopping-cart"></i></button></a>
+                                <a href="" class="addtocart" data-id="'.$product_watch->id.'"><button class="pr-cart" > <i class="fal fa-shopping-cart"></i></button></a>
                                 <a href="'. URL('detail-product/' . $product_watch->slug_product) . '.html' .'"><button class="pr-detail">Chi tiết <i class="far fa-angle-double-right"></i></button></a>
                                 </div>
                             </div>

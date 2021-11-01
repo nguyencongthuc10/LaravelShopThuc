@@ -22,10 +22,10 @@ session_start();
 class LoginController extends Controller
 {
     public function login(){
-        return view('customer/login');
+        return view('password/login');
     }
     public function register(){
-        return view('customer/register');
+        return view('password/register');
     }
    
     public function executedRegister(Request $request){
@@ -108,7 +108,7 @@ class LoginController extends Controller
 
             // ngăn chặn trường hợp vào thẳng trang
             if($updateToken->token_user == $token){
-                return view('customer/changePassword');
+                return view('password/changePassword');
             }else{
                 return redirect('/forgotPassword.html');
             }
@@ -138,7 +138,7 @@ class LoginController extends Controller
         }
     }
     public function forgotPassword(){
-        return view('customer/forgotPassword');
+        return view('password/forgotPassword');
     }
     // vào trang OTP với token
     public function OTPexecuteForgotPassword($token){
@@ -147,7 +147,7 @@ class LoginController extends Controller
             $updateToken = User::where('email_or_phone_user',$mailCustomerRequest)->first();
             // ngăn chặn trường hợp vào thẳng trang
             if($updateToken->token_user == $token){
-                return view('customer/otpForgotPass');
+                return view('password/otpForgotPass');
             }else{
                 return redirect('/forgotPassword.html');
             }

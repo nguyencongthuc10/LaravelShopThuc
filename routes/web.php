@@ -30,6 +30,9 @@ Route::post('/load-more-product','ProductController@loadMore');
 
 Route::post('/watchAjax','ProductController@watchAjax');
 Route::post('/searchAjax','ProductController@searchAjax');
+//Cart Ajax
+Route::get('/show-cart-ajax.html', 'CartController@showCartAjax');
+Route::post('/add-cart-ajax','CartController@addCartAjax');
 
 
 // Login , Logout, register

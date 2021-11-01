@@ -15,6 +15,7 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('public/fontend/css/magnify.css') }}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="stylesheet" href="{{ asset('public/fontend/css/xzoom.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{asset('public/fontend/css/sweetalert.css')}}">  
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;1,200;1,400&display=swap"
             rel="stylesheet">
@@ -40,8 +41,8 @@
                         <div class="cart">
                             <span class="cart-span">
 
-                                <a href="#"> <i class="fal fa-shopping-cart "></i></a>
-                                <div class="dropdown-cart">
+                                <a href="{{URL('show-cart-ajax.html')}}" id="clickcart" > <i class="fal fa-shopping-cart "></i></a>
+                                <div class="dropdown-cart" name="dropdown-cart">
                                     <div class="product-cart">
                                         <img src="{{ asset('/images/user.png') }}">
                                         <div class="item-cart">
@@ -52,7 +53,7 @@
                                     <div class="price-cart"><span>Tổng :</span>2,800,000đ</div>
 
                                     <div class=btn-full>
-                                        <button class="btn-cart">Xem giỏi hàng</button>
+                                        <a href="{{URL('show-cart-ajax.html')}}"><button class="btn-cart">Xem giỏi hàng</button></a>
                                         <button class="btn-pay">Thanh toán</button>
                                     </div>
                                 </div>
@@ -91,7 +92,7 @@
                                                 style="margin-right: 5px;" class="fas fa-home"></i>Trang chủ</a></li>
                                     <li><a href="{{ URL('/introduce.html') }}">Giới thiệu</a></li>
                                     <li><a href="{{ URL('/watch-man.html') }}">Đồng hồ nam</a></li>
-                                    <li><a href="{{ URL('/watch-woman.html') }}">Đồng hồ nữ</a></li>
+                                    <li><a href="{{ URL('/watch-man.html') }}">Đồng hồ nữ</a></li>
                                     <li><a href="{{ URL('/contact.html') }}">Liên hệ</a></li>
                                    
 
@@ -218,6 +219,8 @@
         <script type="text/javascript" src="{{ asset('public/fontend/js/xzoom.js') }}"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.1/umd/react.production.min.js">
         </script>
+        <script src="{{asset('public/fontend/js/sweetalert.min.js')}}"></script>
+        <script src="{{asset('public/fontend/js/sweetalert.js')}}"></script>
         <script type="text/javascript"
                 src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.1/umd/react-dom.production.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/classnames/2.2.6/index.min.js"></script>
@@ -512,13 +515,13 @@
 
                 function delay(callback, ms) {
                 var timer = 0;
-                return function() {
-                    var context = this, args = arguments;
-                    clearTimeout(timer);
-                    timer = setTimeout(function () {
-                    callback.apply(context, args);
-                    }, ms || 0);
-                };
+                    return function() {
+                        var context = this, args = arguments;
+                        clearTimeout(timer);
+                        timer = setTimeout(function () {
+                        callback.apply(context, args);
+                        }, ms || 0);
+                    };
                 }
                 $('#searchAjaxProduct').keyup(delay(function (e) {
                     data = $(this).val()
@@ -528,6 +531,7 @@
                     searchAjax(data);
                    }
                 }, 500));
+               
                 // $('#searchAjaxProduct').keyup(function(){
                 //     data = $(this).val()
                 //    if(data == null){
@@ -554,10 +558,47 @@
                 
         </script>
        <script>
-           $('.addtocart').click(function(e){
-               e.preventDefault();
-                alert('asf');
-                alert($(this).data('id'));
+          (function(){
+            $('.addtocart').click(function(e){
+                e.preventDefault();
+                var id = $(this).data('id');
+                AddCartAjax(id);
            });
+
+           function AddCartAjax ($product_id,e){
+            e.preventDefault();
+            var id = $product_id;
+                $.ajax({
+                    url: '{{url('/add-cart-ajax')}}',
+                    method: 'POST',
+                    data:{
+                        product_id: $product_id,
+                    },
+                    success:function(data){
+
+                        swal({
+                                title: "Đã thêm sản phẩm vào giỏ hàng",
+                                text: "Bạn có thể mua hàng tiếp hoặc tới giỏ hàng để tiến hành thanh toán",
+                                showCancelButton: true,
+                                cancelButtonText: "Xem tiếp",
+                                confirmButtonClass: "btn-success",
+                                confirmButtonText: "Đi đến giỏ hàng",
+                                closeOnConfirm: false
+                            },
+                            function() {
+                                window.location.href = "{{url('/show-cart-ajax.html')}}";
+                            });
+
+                    }
+
+                });
+        }
+          })();
+
+        //  $('#clickcart').on('click', function(e){
+        //     e.preventDefault();
+        //     $('.dropdown-cart').css('display', 'block');
+            
+        //  });
        </script>
     </body>

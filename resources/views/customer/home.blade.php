@@ -78,7 +78,7 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-6">
                         <div class="xuhuong-nam">
-                            <a class="button-nam" href="#">
+                            <a class="button-nam" href="{{URL('/watch-man.html')}}">
 
                                 <span></span>
                                 <span></span>
@@ -90,7 +90,7 @@
                     </div>
                     <div class="col-md-6 col-sm-6">
                         <div class="xuhuong-nu">
-                            <a class="button-nu" href="#">
+                            <a class="button-nu" href="{{URL('/watch-man.html')}}">
                                 Xu hướng nữ
                                 <span></span>
                                 <span></span>
@@ -155,7 +155,7 @@
                                             <div class="btn-cart-detail">
                                                 <a href="" class="addtocart" data-id="{{$highlight_product->id}}"><button class="pr-cart"> <i class="fal fa-shopping-cart"></i></button></a>
                                                 <a href="{{URL('detail-product/' . $highlight_product->slug_product) . '.html' }}"><button class="pr-detail">Chi tiết <i class="far fa-angle-double-right"></i></button></a>
-                                                {{-- <a href="{{ URL('detail-product/', [$highlight_product->slug_product, $highlight_product->id]) }}"><button class="pr-detail">Chi tiết <i class="far fa-angle-double-right"></i></button></a> --}}
+                                                
                                             </div>
                                         </div>
 
@@ -238,7 +238,7 @@
                                             </div>
 
                                             <div class="btn-cart-detail">
-                                                <a href="" class="addtocart"><button class="pr-cart"> <i class="fal fa-shopping-cart"></i></button></a>
+                                               <a href="" class="addtocart" data-id="{{$new_product->id}}"><button class="pr-cart"> <i class="fal fa-shopping-cart"></i></button></a>
                                                 <a href="{{URL('detail-product/' . $new_product->slug_product) . '.html' }}"><button class="pr-detail">Chi tiết <i class="far fa-angle-double-right"></i></button></a>
                                             </div>
                                         </div>
@@ -308,7 +308,7 @@
 
                                             </div>
                                             <div class="btn-cart-detail">
-                                                <a href="" class="addtocart"><button class="pr-cart"> <i class="fal fa-shopping-cart"></i></button></a>
+                                                <a href="" class="addtocart" data-id="{{$discount_product->id}}"><button class="pr-cart"> <i class="fal fa-shopping-cart"></i></button></a>
                                                 <a href="{{URL('detail-product/' . $discount_product->slug_product) . '.html' }}"><button class="pr-detail">Chi tiết <i class="far fa-angle-double-right"></i></button></a>
                                             </div>
                                         </div>

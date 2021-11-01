@@ -29,8 +29,8 @@ class OTPMail extends Mailable
     public function build()
     {
         return $this->from('otpmaillravelthuc@gmail.com','OTP ShopThuc')
-        ->view('customer.OTPMailCusTom')
-        ->text('customer.OTPMailCustom_plain')
+        ->view('mail.OTPMailCusTom')
+        ->text('mail.OTPMailCustom_plain')
         ->subject('Xác nhận OTP')
         
         ->with(
