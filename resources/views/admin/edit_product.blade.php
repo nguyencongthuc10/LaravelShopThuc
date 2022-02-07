@@ -131,13 +131,13 @@
                                         <label for="exampleInputPassword1">Mô tả thương hiệu</label>
                                         <textarea type="text" style="resize: none;" rows="8" class="form-control"
                                             name="update_desc_product"
-                                            id="editor2">{{ $edit_product->desc_product }}</textarea>
+                                            id="editor5">{{ $edit_product->desc_product }}</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">Nội dung thương hiệu</label>
                                         <textarea type="text" style="resize: none;" rows="8" class="form-control"
                                             name="update_desc_product"
-                                            id="editor3">{{ $edit_product->content_product }}</textarea>
+                                            id="editor6">{{ $edit_product->content_product }}</textarea>
                                     </div>
 
 

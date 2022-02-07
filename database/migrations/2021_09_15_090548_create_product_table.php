@@ -18,7 +18,7 @@ class CreateProductTable extends Migration
             $table->integer('id_brand')->unsigned(); // bắt buộc số nguy
             $table->string('name_product');
             $table->string('slug_product');
-            $table->string('price_product');
+            $table->string('price_product');          
             $table->string('discount_price_product');
             $table->integer('status_product');
             $table->text('desc_product');

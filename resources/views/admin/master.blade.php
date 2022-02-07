@@ -144,8 +144,20 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         </li>
                         <!-- END BRAND -->
 
-                        <!-- ============================================================ -->
+                        <!-- ============================= Order =============================== -->
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-book"></i>
+                                <span>Đơn hàng</span>
+                            </a>
+                            <ul class="sub">
+                                {{-- <li><a href="{{ URL::to('/home-add-brand') }}">Thêm thương hiệu sản phẩm</a></li> --}}
+                                <li><a href="{{ URL::to('/all-order') }}">Tất cả đơn hàng</a></li>
 
+                            </ul>
+                        </li>
+                        <!-- ============================= End Order =============================== -->
+                       
                     </ul>
                 </div>
                 <!-- sidebar menu end-->
@@ -179,6 +191,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.79/jquery.form-validator.min.js">
     </script>
     <script src="{{ asset('public/backend/js/jquery.scrollTo.js') }}"></script>
+   
     <script>
         $.validate({
            
@@ -188,6 +201,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         CKEDITOR.replace('editor1');
         CKEDITOR.replace('editor2');
         CKEDITOR.replace('editor3');
+
+        CKEDITOR.replace('editor4');
+        CKEDITOR.replace('editor5');
+        CKEDITOR.replace('editor6');
+        CKEDITOR.replace('editor7');
+        CKEDITOR.replace('editor8');
+
+
     </script>
     <script>
        $('input#product').keyup(function(event) {

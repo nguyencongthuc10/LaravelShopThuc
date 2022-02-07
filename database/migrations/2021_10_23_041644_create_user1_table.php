@@ -19,6 +19,7 @@ class CreateUser1Table extends Migration
             $table->string('email_or_phone_user');
             $table->string('role')->default('0');
             $table->string('password');
+            $table->string('cart_token');
             $table->string('token_user');
             $table->rememberToken();
             $table->timestamps();

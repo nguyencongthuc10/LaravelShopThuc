@@ -63,7 +63,7 @@
                                         <label for="exampleInputPassword1">Mô tả sản phẩm</label>
                                         <textarea type="text" style="resize: none;" rows="8"
                                             class="form-control" name="add_desc_product"
-                                            id="editor2" placeholder="Nhập mô tả sản phẩm..."></textarea>
+                                            id="editor4" placeholder="Nhập mô tả sản phẩm..."></textarea>
 
                                     </div>
                                 </div>

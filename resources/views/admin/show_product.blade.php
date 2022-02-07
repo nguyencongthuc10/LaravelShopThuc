@@ -58,7 +58,7 @@
                         <tr>
 
                             <th>Tên sản phẩm</th>
-                            <th>Hình ảnh thương hiệu</th>
+                            <th>Hình ảnh sản phẩm</th>
                             <th>Phân loại Nam / Nữ</th>
                             <th>Trạng thái</th>
                             <th>Nổi bật</th>

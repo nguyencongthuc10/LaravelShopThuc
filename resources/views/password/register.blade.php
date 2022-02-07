@@ -108,7 +108,8 @@
                 // }, 'message lỗii'),
                 // hàm check Email invalid
                 // truyền URL xử lý AJAX 
-                Validator.isEmailInvalid('#emailRegsiterExit','{{ url('/ajaxCheckEmailExit') }}','Email đã tồn tại'),
+                
+
             ]
         });
     </script>

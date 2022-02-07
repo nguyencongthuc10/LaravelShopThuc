@@ -29,7 +29,7 @@
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Mô tả thương hiệu</label>
                                 <textarea type="text" style="resize: none;" rows="8" class="form-control"
-                                    name="update_desc_brand" id="editor1">{{ $info_edit->desc_brand }}</textarea>
+                                    name="update_desc_brand" id="editor2">{{ $info_edit->desc_brand }}</textarea>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Hình ảnh thương hiệu</label>

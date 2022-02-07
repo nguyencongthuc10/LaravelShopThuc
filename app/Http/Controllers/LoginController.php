@@ -32,18 +32,20 @@ class LoginController extends Controller
         $name_register = $request->register_name;
         $phone_or_email_register = $request->register_phone_or_email;
         $pass_register = bcrypt($request->register_pass);
+        $tokens_random = bin2hex(random_bytes(15)); 
         
         $user = new USer();
         $user->name_user = $name_register;
         $user->email_or_phone_user = $phone_or_email_register;
         $user->password = $pass_register;
+        $user->cart_token = $tokens_random;
         $user->save();
         // $show_new = Product::orderBy('id', 'desc')->where('status_product', '1')->take('4')->get();
         // $show_highlight = Product::orderBy('id', 'desc')->where('status_product', '1')->where('highlight_product', 1)->take('4')->get();
         // $show_discount = Product::orderBy('id', 'desc')->where('status_product', '1')->where('discount_price_product', '>', 0)->take(4)->get();
         // return view('customer/home', compact('show_highlight', 'show_new', 'show_discount','show_all'));
         Session::put('message_register', 'Đăng ký tài khoản thành công');
-        return redirect('/login');
+        return redirect('/login.html');
     }
     public function executeLogin(Request $request){
         $login = [
@@ -77,7 +79,7 @@ class LoginController extends Controller
     }
     public function logout(){
         Auth::logout();
-        return redirect('/login');
+        return redirect('/login.html');
     }
     
     // cập nhật mật khẩu
@@ -101,7 +103,7 @@ class LoginController extends Controller
     public function changePass($token){
         if(Auth::check()){
             
-            return view('customer/changePass');
+            return view('password/changePass');
         }elseif(Session::has('mailCustomerRequest')){
             $mailCustomerRequest = Session::get('mailCustomerRequest');
             $updateToken = User::where('email_or_phone_user',$mailCustomerRequest)->first();

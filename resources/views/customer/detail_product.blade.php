@@ -86,7 +86,7 @@
 				</div>
 				<hr  width="100%" align="center" />
 				<div class="detail-description">
-					{{$detail_product->desc_product}}
+					{!!$detail_product->desc_product!!}
 				</div>
 				<hr  width="100%" align="center" />
 				<div class="information-detail">
@@ -118,12 +118,12 @@
 					</div>
 					<hr  width="100%" align="center" />
 					<div class="detail-button">
-						<button class="detail-cart"><a href="#">Thêm vào giỏ hàng</a></button>
+						<button id="detailCartProduct"  data-id="{{$detail_product->id}}" class="detail-cart"><a href="javascript:;">Thêm vào giỏ hàng</a></button>
 						<button class="detail-buy-now"><a href="#">Mua ngay</a></button>
 					</div>
 				</form>
 				<hr  width="100%" align="center" />
-
+				
 				<div class="detail-pr-holine">
 					Gọi đặt mua: <span><a href="tel:034 998 3657" >034 998 3657</a></span> (8:00-1:30)
 				</div>
@@ -146,7 +146,7 @@
 			<div class="tab-content">
 
 				<div role="tabpanel" class="tab-pane fade in active" id="home">
-                    {{$detail_product->content_product}}
+                    {!!$detail_product->content_product!!}
 				</div>
 				<div role="tabpanel" class="tab-pane" id="profile">
 					<div class="comment-user">

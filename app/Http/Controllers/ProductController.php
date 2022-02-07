@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use App\Brand;
 use App\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Carbon\Carbon;
 use Session;
 
 session_start();
@@ -46,7 +46,7 @@ class ProductController extends Controller
 
         $add_product = new Product();
         $add_product->name_product = $request->add_name_product;
-        $add_product->slug_product = Str::slug($request->add_name_product, '-') .'-'. Carbon::now('Asia/Ho_Chi_Minh')->timestamp;
+        $add_product->slug_product = Str::slug($request->add_name_product, '-') . '-' . Carbon::now('Asia/Ho_Chi_Minh')->timestamp;
         $add_product->price_product = $request->add_price_product;
         $add_product->discount_price_product = $request->add_discount_price_product;
         $add_product->desc_product = $request->add_desc_product;
@@ -138,7 +138,7 @@ class ProductController extends Controller
     {
         $update_product = Product::find($id);
         $update_product->name_product = $request->update_name_product;
-  
+
         $update_product->price_product = $request->update_price_product;
         $update_product->discount_price_product = $request->update_discount_price_product;
         $update_product->desc_product = $request->update_desc_product;
@@ -284,15 +284,24 @@ class ProductController extends Controller
                 $output .= '
                                 </div>
 
-                                <div class="btn-cart-detail">
-                                <a href="" class="addtocart" data-id="'.$product_watch->id.'" onclick="AddCartAjax('.$product_watch->id.')"><button class="pr-cart" id="idCart"> <i class="fal fa-shopping-cart"></i></button></a>
-                                <a href="'. URL('detail-product/' . $product_watch->slug_product) . '.html' .'"><button class="pr-detail">Chi tiết <i class="far fa-angle-double-right"></i></button></a>
+                                <div class="btn-cart-detail">';
+                                if(Auth::check()){
+                                    $output .= '
+                                    <a href="javascript:;"  onclick="AddCartAjax(' . $product_watch->id . ')"><button class="pr-cart" id="idCart"> <i class="fal fa-shopping-cart"></i></button></a>
+                                    ';
+                                }else{
+                                    $output .= '
+                                    <a href="'.URL('/login.html').'"><button class="pr-cart" id="idCart"> <i class="fal fa-shopping-cart"></i></button></a>
+                                    ';
+                                }
+               $output .= '               
+                                <a href="' . URL('detail-product/' . $product_watch->slug_product) . '.html' . '"><button class="pr-detail">Chi tiết <i class="far fa-angle-double-right"></i></button></a>
                                 </div>
                             </div>
 
                     </div>
                 </div>
-                
+
                 ';
             }
             foreach ($product_final as $product) {
@@ -315,20 +324,26 @@ class ProductController extends Controller
         }
 
         echo $output;
-   
+
     }
     // Chi tiết sản phấm
     public function detail_product(Request $request, $slug)
     {
-        $slug_final = trim($slug,".html");;
+        $slug_final = trim($slug, ".html");
         $detail_product1 = Product::where('slug_product', $slug_final)->get();
-        $id_brand;
-        foreach ($detail_product1 as $detail_product){
-            $id_brand = $detail_product->id;
+       
+        if(!$detail_product1->isEmpty()){
+            $id_brand;
+            foreach ($detail_product1 as $detail_product) {
+                $id_brand = $detail_product->id_brand;
+            }
+            
+            $related = Product::where('status_product', '1')->where('id_brand', $id_brand)->orderBy('id', 'DESC')->whereNotIn('slug_product', [$slug_final])->take(4)->get();
+           
+            return view('customer/detail_product', compact('detail_product1', 'related'));
         }
-
-        $related = Product::where('status_product', '1')->where('id_brand', $id_brand)->orderBy('id', 'DESC')->whereNotIn('slug_product',[$slug_final])->take(4)->get();
-        return view('customer/detail_product', compact('detail_product1', 'related'));
+        return redirect('home.html');
+        
 
     }
     // Phân loại sản phẩm
@@ -350,7 +365,8 @@ class ProductController extends Controller
         $classify = $request->classify;
         $price_final = $request->last_price;
         // $data1,$data2,$price_final,$classify
-        function watchProductNotId($sortWatch, $data1, $data2, $classify){
+        function watchProductNotId($sortWatch, $data1, $data2, $classify)
+        {
             if ($sortWatch == 00) {
                 if ($data1 == 0 && $data2 == 0) {
                     $watch_product = Product::orderBy('id', 'DESC')->where('status_product', '1')->where('classify_product', $classify)->take(4)->get();
@@ -421,7 +437,8 @@ class ProductController extends Controller
 
         }
 
-        function watchProductId($sortWatch, $data1, $data2, $price_final, $id, $classify){
+        function watchProductId($sortWatch, $data1, $data2, $price_final, $id, $classify)
+        {
 
             if ($sortWatch == 11) {
                 if ($data1 == 0 && $data2 == 0) {
@@ -429,8 +446,7 @@ class ProductController extends Controller
 
                 } elseif ($data1 == 2000000 && $data2 == 0) {
                     $watch_product = Product::where('status_product', '1')
-                        ->where('classify_product', $classify)->where('price_product', '<=', $data1)->where('price_product', '<', $price_final)->orderBy('price_product', 'DESC')->take(4)->get();} 
-                elseif ($data1 == 20000000 && $data2 == 0) {
+                        ->where('classify_product', $classify)->where('price_product', '<=', $data1)->where('price_product', '<', $price_final)->orderBy('price_product', 'DESC')->take(4)->get();} elseif ($data1 == 20000000 && $data2 == 0) {
                     $watch_product = Product::where('status_product', '1')
                         ->where('classify_product', $classify)->where('price_product', '>=', $data1)->where('price_product', '<', $price_final)->orderBy('price_product', 'DESC')->take(4)->get();
                 } elseif ($data2 == 99) {
@@ -446,8 +462,7 @@ class ProductController extends Controller
                     $watch_product = Product::orderBy('price_product', 'ASC')->where('status_product', '1')->where('price_product', '>', $price_final)->where('classify_product', $classify)->take(4)->get();
                 } elseif ($data1 == 2000000 && $data2 == 0) {
                     $watch_product = Product::where('status_product', '1')
-                        ->where('classify_product', $classify)->where('price_product', '<=', $data1)->where('price_product', '>', $price_final)->orderBy('price_product', 'ASC')->take(4)->get();}
-                elseif ($data1 == 20000000 && $data2 == 0) {
+                        ->where('classify_product', $classify)->where('price_product', '<=', $data1)->where('price_product', '>', $price_final)->orderBy('price_product', 'ASC')->take(4)->get();} elseif ($data1 == 20000000 && $data2 == 0) {
                     $watch_product = Product::where('status_product', '1')
                         ->where('classify_product', $classify)->where('price_product', '>', $price_final)->where('price_product', '>=', $data1)->where('id_brand', '=', $data1)->orderBy('price_product', 'ASC')->take(4)->get();
                 } elseif ($data2 == 99) {
@@ -479,8 +494,9 @@ class ProductController extends Controller
             return $watch_product;
 
         }
-        
-        function productFinal($sortWatch,$data1,$data2,$classify){
+
+        function productFinal($sortWatch, $data1, $data2, $classify)
+        {
 
             if ($sortWatch == 11) {
                 if ($data1 == 0 && $data2 == 0) {
@@ -488,24 +504,22 @@ class ProductController extends Controller
 
                 } elseif ($data1 == 2000000 && $data2 == 0) {
                     $product_final = Product::orderBy('price_product', 'ASC')->where('status_product', '1')->where('classify_product', $classify)->where('price_product', '<=', $data1)->take(1)->get();
-    
-                } 
-                elseif ($data1 == 20000000 && $data2 == 0) {
+
+                } elseif ($data1 == 20000000 && $data2 == 0) {
                     $product_final = Product::orderBy('price_product', 'ASC')->where('status_product', '1')->where('classify_product', $classify)->where('price_product', '>=', $data1)->take(1)->get();
 
                 } elseif ($data2 == 99) {
                     $product_final = Product::orderBy('price_product', 'ASC')->where('status_product', '1')->where('classify_product', $classify)->where('id_brand', '=', $data1)->take(1)->get();
                 } else {
                     $product_final = Product::orderBy('price_product', 'ASC')->where('status_product', '1')->where('classify_product', $classify)->where('price_product', '>=', $data1)->where('price_product', '<=', $data2)->take(1)->get();
-                }    
+                }
 
             } elseif ($sortWatch == 22) {
                 if ($data1 == 0 && $data2 == 0) {
                     $product_final = Product::orderBy('price_product', 'DESC')->where('status_product', '1')->where('classify_product', $classify)->take(1)->get();
                 } elseif ($data1 == 2000000 && $data2 == 0) {
                     $product_final = Product::orderBy('price_product', 'DESC')->where('status_product', '1')->where('classify_product', $classify)->where('price_product', '<=', $data1)->take(1)->get();
-                }
-                 elseif ($data1 == 20000000 && $data2 == 0) {
+                } elseif ($data1 == 20000000 && $data2 == 0) {
                     $product_final = Product::orderBy('price_product', 'DESC')->where('status_product', '1')->where('classify_product', $classify)->where('price_product', '>=', $data1)->take(1)->get();
 
                 } elseif ($data2 == 99) {
@@ -523,7 +537,7 @@ class ProductController extends Controller
                     $product_final = Product::orderBy('id', 'ASC')->where('status_product', '1')->where('classify_product', $classify)->where('price_product', '<=', $data1)->take(1)->get();
 
                 } elseif ($data1 == 20000000 && $data2 == 0) {
-                    $product_final = Product::orderBy('id', 'ASC')->where('status_product', '1')->where('classify_product', $classify)->where('price_product', '>=', $data)->take(1)->get();
+                    $product_final = Product::orderBy('id', 'ASC')->where('status_product', '1')->where('classify_product', $classify)->where('price_product', '>=', $data1)->take(1)->get();
 
                 } elseif ($data2 == 99) {
                     $product_final = Product::orderBy('id', 'ASC')->where('status_product', '1')->where('classify_product', $classify)->where('id_brand', '=', $data1)->take(1)->get();
@@ -533,15 +547,15 @@ class ProductController extends Controller
 
                 }
             }
-        return $product_final;
+            return $product_final;
 
         }
-        $product_final = productFinal($sortWatch,$data1,$data2,$classify);
-       
+        $product_final = productFinal($sortWatch, $data1, $data2, $classify);
+
         $last_id;
         if ($request->id > 0) {
             $watch_product = watchProductId($sortWatch, $data1, $data2, $price_final, $id, $classify);
-           
+
         } else {
             $watch_product = watchProductNotId($sortWatch, $data1, $data2, $classify);
         }
@@ -599,9 +613,17 @@ class ProductController extends Controller
                 $output .= '
                                 </div>
 
-                                <div class="btn-cart-detail">
-                                <a href="" class="addtocart" data-id="'.$product_watch->id.'"><button class="pr-cart" > <i class="fal fa-shopping-cart"></i></button></a>
-                                <a href="'. URL('detail-product/' . $product_watch->slug_product) . '.html' .'"><button class="pr-detail">Chi tiết <i class="far fa-angle-double-right"></i></button></a>
+                                <div class="btn-cart-detail">';
+                                if(Auth::check()){
+                                    $output .='<a href="javascript:;"  onclick="AddCartAjax(' . $product_watch->id . ')"><button class="pr-cart" > <i class="fal fa-shopping-cart"></i></button></a>
+                                    ';
+                                }else{
+                                    $output .='
+                                    <a href="'.URL('login.html').'" "><button class="pr-cart" > <i class="fal fa-shopping-cart"></i></button></a>
+                                    ';
+                                }
+                $output .='                
+                                <a href="' . URL('detail-product/' . $product_watch->slug_product) . '.html' . '"><button class="pr-detail">Chi tiết <i class="far fa-angle-double-right"></i></button></a>
                                 </div>
                             </div>
 
@@ -633,29 +655,27 @@ class ProductController extends Controller
         echo $output;
 
     }
-    public function searchAjax(Request $request){
+    public function searchAjax(Request $request)
+    {
         $data = $request->data;
         $result = '';
-        if($data == null)
-        {
+        if ($data == null) {
             echo $result;
             return;
-        }
-        else{
-            $resultSearch = Product::orderBy('id', 'DESC')->where('name_product','LIKE', "%$data%")->get();
+        } else {
+            $resultSearch = Product::orderBy('id', 'DESC')->where('name_product', 'LIKE', "%$data%")->get();
         }
         $result .= '
         <div class="suggestSearch">
             <ul>
         ';
-                  
-        
-        if(!$resultSearch->isEmpty()){
-            foreach($resultSearch as $resultForeach){
+
+        if (!$resultSearch->isEmpty()) {
+            foreach ($resultSearch as $resultForeach) {
                 $result .= '
                 <li>
-                    <a href="'. URL('detail-product/' . $resultForeach->slug_product) . '.html' .'">
-                        <img src="' . URL('public/updates/product/' . $resultForeach->image_product) . '" alt="'.$resultForeach->image_product.'">
+                    <a href="' . URL('detail-product/' . $resultForeach->slug_product) . '.html' . '">
+                        <img src="' . URL('public/updates/product/' . $resultForeach->image_product) . '" alt="' . $resultForeach->image_product . '">
                         <div class="search_nameandPrice">
                             <h3>' . $resultForeach->name_product . '</h3>
                             <span>' . number_format($resultForeach->price_product) . ' ' . 'VND' . '</span>
@@ -665,10 +685,10 @@ class ProductController extends Controller
 
                 ';
             }
-        $result .= '
+            $result .= '
         </ul>
-        </div>';    
-        }else{
+        </div>';
+        } else {
             $result = '';
         }
 
@@ -676,14 +696,14 @@ class ProductController extends Controller
 
     }
     public function searchProduct(Request $request)
-    {  
+    {
         $data = $request->keyword;
-        if($data == null){
+        if ($data == null) {
             $resultSearchProduct = null;
-        }else{
-            $resultSearchProduct = Product::orderBy('id', 'DESC')->where('name_product','LIKE', "%$data%")->get();
+        } else {
+            $resultSearchProduct = Product::orderBy('id', 'DESC')->where('name_product', 'LIKE', "%$data%")->get();
         }
-        
+
         return view('customer/search_product', compact('resultSearchProduct'));
     }
 }

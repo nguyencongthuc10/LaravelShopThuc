@@ -13,26 +13,31 @@ use  Illuminate\Auth\Middleware\CustomerMiddleware;
 */
 
 // =============================== Font End =============================================//
-Route::group(['middleware' => ['CustomerMiddleware']], function () {
-    Route::get('/', 'HomeController@index');
-    Route::get('/home.html', 'HomeController@index');
-    Route::get('/contact.html', 'HomeController@contact');
-    Route::get('/introduce.html', 'HomeController@introduce');
-    Route::get('/detail-product/{id}.html', 'ProductController@detail_product');
-    Route::get('/watch-man.html', 'ProductController@watch');
-    Route::get('/searchProduct.html', 'ProductController@searchProduct');
-});
+Route::get('/', 'HomeController@index');
+Route::get('/home.html', 'HomeController@index');
+Route::get('/contact.html', 'HomeController@contact');
+Route::get('/introduce.html', 'HomeController@introduce');
+Route::get('/detail-product/{id}.html', 'ProductController@detail_product');
+Route::get('/watch-man.html', 'ProductController@watch');
+Route::get('/searchProduct.html', 'ProductController@searchProduct');
+
+    
+
 // Home
 
 Route::post('/load-more-product','ProductController@loadMore');
-
-
-
 Route::post('/watchAjax','ProductController@watchAjax');
 Route::post('/searchAjax','ProductController@searchAjax');
 //Cart Ajax
-Route::get('/show-cart-ajax.html', 'CartController@showCartAjax');
-Route::post('/add-cart-ajax','CartController@addCartAjax');
+Route::group(['middleware' => ['CustomerMiddleware']], function () {
+    Route::get('/show-cart-ajax.html', 'CartController@showCartAjax');
+    Route::post('/add-cart-ajax','CartController@addCartAjax');
+    Route::post('/delete-cart-ajax','CartController@deleteCartAjax');
+    Route::post('/update-cart-ajax','CartController@UpdateCartAjax');
+    Route::get('/thanh-toan.html','CartController@thanhToan');
+    Route::post('/executeOrder.html','CartController@executeOrder');
+    Route::get('/information-order.html','CartController@showinformationOrder');
+});
 
 
 // Login , Logout, register
@@ -80,3 +85,7 @@ Route::get('/un-active-product/{id}','ProductController@unactive');
 Route::get('/active-product/{id}','ProductController@active');
 Route::get('/active-highlight/{id}','ProductController@active_highlight');
 Route::get('/un-active-highlight/{id}','ProductController@un_active_highlight');
+// order
+Route::get('/all-order','AdminOrderController@all_order');
+Route::get('/info-detail/{id}','AdminOrderController@info_detail');
+Route::get('/order-status/{id}','AdminOrderController@order_status');

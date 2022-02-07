@@ -15,7 +15,7 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('public/fontend/css/magnify.css') }}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="stylesheet" href="{{ asset('public/fontend/css/xzoom.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{asset('public/fontend/css/sweetalert.css')}}">  
+        <link rel="stylesheet" type="text/css" href="{{ asset('public/fontend/css/sweetalert.css') }}">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;1,200;1,400&display=swap"
             rel="stylesheet">
@@ -40,24 +40,61 @@
                         <div class="logo">thucshop</div>
                         <div class="cart">
                             <span class="cart-span">
+                                @php
+                                    $total = 0;
+                                    $dem = 0;
+                                    
+                                @endphp
+                                <a href="{{ URL('show-cart-ajax.html') }}" id="clickcart"> <i
+                                        class="fal fa-shopping-cart "></i></a>
+                                <div id="dropdowncart">
+                                    <div class="dropdown-cart" name="dropdown-cart">
+                                        @if (Auth::check())
+                                            @if (!Session::get(Auth::user()->cart_token) == '')
+                                                <div class="group-product-cart">
+                                                    @foreach (Session::get(Auth::user()->cart_token) as $key => $val1)
+                                                        @php
+                                                            $subtoal = $val1['product_price'] * $val1['product_qty'];
+                                                            $total += $subtoal;
+                                                            $dem++;
+                                                        @endphp
+                                                        <div class="product-cart">
+                                                            <img
+                                                                src="{{ URL('public/updates/product/' . $val1['product_image']) }}">
+                                                            <div class="item-cart">
+                                                                <div class="div-name-pr-cart"><span
+                                                                        class="name-pr-cart">{{ $val1['product_name'] }}</span>
+                                                                </div>
+                                                                <div class="div-pricr-pr-cart"><span
+                                                                        class="pricr-pr-cart">{{ $val1['product_price'] }}
+                                                                        x {{ $val1['product_qty'] }}</span></div>
+                                                            </div>
+                                                        </div>
 
-                                <a href="{{URL('show-cart-ajax.html')}}" id="clickcart" > <i class="fal fa-shopping-cart "></i></a>
-                                <div class="dropdown-cart" name="dropdown-cart">
-                                    <div class="product-cart">
-                                        <img src="{{ asset('/images/user.png') }}">
-                                        <div class="item-cart">
-                                            <span class="name-pr-cart">Sản phẩm 1</span>
-                                            <span class="pricr-pr-cart">1 * 700000</span>
-                                        </div>
-                                    </div>
-                                    <div class="price-cart"><span>Tổng :</span>2,800,000đ</div>
+                                                    @endforeach
+                                                </div>
+                                                <div class="price-cart"><span>Tổng :</span>{{ $total }}
+                                                </div>
+                                                <div class=btn-full>
+                                                    <a href="{{ URL('/show-cart-ajax.html') }}"><button
+                                                            class="btn-cart">Xem giỏi hàng</button></a>
 
-                                    <div class=btn-full>
-                                        <a href="{{URL('show-cart-ajax.html')}}"><button class="btn-cart">Xem giỏi hàng</button></a>
-                                        <button class="btn-pay">Thanh toán</button>
+                                                    <a href="{{ URL('/thanh-toan.html') }}"><button
+                                                            class="btn-pay">Thanh toán</button></a>
+                                                </div>
+                                            @else
+                                                <h3 style="text-align: center; color: #000; font-size:15px;">Chưa có sản
+                                                    phẩm nào trong giỏ hàng</h3>
+                                            @endif
+                                        @else
+                                            <h3 style="text-align: center; color: #000; font-size:15px;">Chưa có sản
+                                                phẩm nào trong giỏ hàng</h3>
+                                        @endif
+
                                     </div>
+                                    <span class="cout-cart">{{ $dem }}</span>
                                 </div>
-                                <span class="cout-cart">1</span>
+
 
                             </span>
 
@@ -72,19 +109,21 @@
                             <ul>
                                 <li>
                                     <div class="search">
-                                        <form action="{{url('/searchProduct.html')}}" method="get" id="FormsearchAjaxProduct">
-                                            
+                                        <form action="{{ url('/searchProduct.html') }}" method="get"
+                                            id="FormsearchAjaxProduct">
+
                                             <label for="search"></label>
-                                            <input class="input" id="searchAjaxProduct"  name="keyword" type="search" class="form-control" placeholder="Nhập tìm kiếm">
+                                            <input class="input" id="searchAjaxProduct" name="keyword"
+                                                type="search" class="form-control" placeholder="Nhập tìm kiếm">
                                             <button class="fas fa-search"></button>
                                         </form>
                                         <div id="searchAjax">
-                                            
+
                                         </div>
                                     </div>
-                                    
 
-                                    
+
+
 
                                 </li>
                                 <div id="menu-1" class="menu-1">
@@ -94,29 +133,35 @@
                                     <li><a href="{{ URL('/watch-man.html') }}">Đồng hồ nam</a></li>
                                     <li><a href="{{ URL('/watch-man.html') }}">Đồng hồ nữ</a></li>
                                     <li><a href="{{ URL('/contact.html') }}">Liên hệ</a></li>
-                                   
 
-                                    @if(Auth::check())
-                                    <li class="dropdown loginindex">
-                                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                        <img alt="" src="http://localhost:8080/LaravelShopThuc/public/backend/images/2.png">
-                                        <span class="username">{{Auth::user()->name_user}}</span>   
-                                        <b class="caret"></b>
-                                    </a>
-                                    <ul class="dropdown-menu extended logout">
-                                        <li><a href="#" class="mauchulogin"><i class=" fa fa-suitcase"></i>Thông tin</a></li>
-                                        <li><a href="{{URL('/changePass/doi-mat-khau.html')}}" class="mauchulogin"><i class="fa fa-cog"></i>Đổi mật khẩu</a></li>
-                                        <li><a href="{{ URL('/logout.html') }}" class="mauchulogin"><i class="fa fa-key"></i> Đăng xuất</a></li>
-                                    </ul>
-                                    </li>
-                                        
+
+                                    @if (Auth::check())
+                                        <li class="dropdown loginindex">
+                                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                                <img alt=""
+                                                    src="http://localhost:8080/LaravelShopThuc/public/backend/images/2.png">
+                                                <span class="username">{{ Auth::user()->name_user }}</span>
+                                                <b class="caret"></b>
+                                            </a>
+                                            <ul class="dropdown-menu extended logout">
+                                                <li><a href="{{ URL('information-order.html') }}"
+                                                        class="mauchulogin"><i class=" fa fa-suitcase"></i>Thông tin
+                                                        đơn hàng</a></li>
+                                                <li><a href="{{ URL('/changePass/doi-mat-khau.html') }}"
+                                                        class="mauchulogin"><i class="fa fa-cog"></i>Đổi mật
+                                                        khẩu</a></li>
+                                                <li><a href="{{ URL('/logout.html') }}" class="mauchulogin"><i
+                                                            class="fa fa-key"></i> Đăng xuất</a></li>
+                                            </ul>
+                                        </li>
+
                                     @else
-                                    <li class="login"><a href="{{ URL('/login.html') }}">
-                                        <i class="fad fa-user"></i>Đăng nhập</a></li>
-   
+                                        <li class="login"><a href="{{ URL('/login.html') }}">
+                                                <i class="fad fa-user"></i>Đăng nhập</a></li>
+
                                     @endif
-                                    
-                                    
+
+
                                 </div>
 
                             </ul>
@@ -151,7 +196,8 @@
                             <div class="col-md-3 col-6 col-sm-6">
                                 <h2>Liên kết</h2>
                                 <div class="footer-left2">
-                                    <p><a href="{{ URL('/home.html') }}" style="color: #d54242;"></i>Trang chủ</a></p>
+                                    <p><a href="{{ URL('/home.html') }}" style="color: #d54242;"></i>Trang chủ</a>
+                                    </p>
                                     <p><a href="{{ URL('/introduce.html') }}">Giới thiệu</a></p>
                                     <p><a href="{{ URL('/watch-man.html') }}">Đồng hồ nam</a></p>
                                     <p><a href="{{ URL('/watch-woman.html') }}">Đông hồ nữ</a></p>
@@ -215,12 +261,13 @@
         <script src="{{ asset('public/fontend/js/jquery.counterup.min.js') }}"></script>
         <script src="{{ asset('public/fontend/js/swiper.js') }}"></script>
         <script src="{{ asset('public/fontend/js/jquery.magnify.js') }}"></script>
-
+        <script src="{{ asset('public/fontend/js/validatortuiche.js') }}"></script>
         <script type="text/javascript" src="{{ asset('public/fontend/js/xzoom.js') }}"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.1/umd/react.production.min.js">
         </script>
-        <script src="{{asset('public/fontend/js/sweetalert.min.js')}}"></script>
-        <script src="{{asset('public/fontend/js/sweetalert.js')}}"></script>
+        <script src="{{ asset('public/fontend/js/sweetalert.min.js') }}"></script>
+        <script src="{{ asset('public/fontend/js/sweetalert.js') }}"></script>
+        {{-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> --}}
         <script type="text/javascript"
                 src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.1/umd/react-dom.production.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/classnames/2.2.6/index.min.js"></script>
@@ -246,256 +293,93 @@
                 return false;
             }
         </script>
+        @yield('javascript')
         <script type="text/javascript">
-          (function(){
-              var id = '';
-            if ($('#product_home')) {
-                
-                load_more(id);
+            (function() {
+                var id = '';
+                if ($('#product_home')) {
 
-                function load_more($id = '') {
-                    $.ajax({
-                        method: 'POST',
-                        url: '{{ url('/load-more-product') }}',
-                        data: {
-
-                            id: $id,
-                        },
-                        success: function(data) {
-                            if (data == '') {
-
-                                $('#load_more_product').remove();
-                               
-                                return;
-                            } else {
-                                $('#load_more_product').remove();
-                                $('#product_home').append(data);
-                            }
-                        }
-
-                    });
-                }
-
-                $(document).on('click', '#load_more_product', function() {
-                    if (isDoubleClicked($(this))) return;
-                    var id = $(this).data('id');
-                    $('#load_more_product').html('<b>Loading...</b>');
                     load_more(id);
 
+                    function load_more($id = '') {
+                        $.ajax({
+                            method: 'POST',
+                            url: '{{ url('/load-more-product') }}',
+                            data: {
 
+                                id: $id,
+                            },
+                            success: function(data) {
+                                if (data == '') {
 
-                });
-                
-                    
-                    
-                    // alert(footer + 50);
-                    
+                                    $('#load_more_product').remove();
 
-              
-                // alert(id);
-                // if(id.offsetTop > 3094){
-                    $(window).scroll(function() {
-                    //     var footer =  $('#footer').height();
-                    id = $('#load_more_product').data('id');
-                    
-                    // alert($(document).height() -400);
-                    // alert($(window).scrollTop() + $(window).height());
-                    if (($(window).scrollTop() + $(window).height()) >= $(document).height()) {
-                       
-                        
-                        $('#load_more_product').html('<b>Loading...</b>');
-                      
-                        load_more(id)
-                       
-                     
-                    }
-
-           
-
-                    //alert($(window).scrollTop());
-                    //var aaa = id1.offsetTop - ($(window).scrollTop() + $(window).height());
-                //     var idd1 =   $(document).scrollTop() + $(window).height();
-                // alert(idd1);
-                    //  alert(id.offsetTop);
-                    // var sbHeight = window.innerHeight * (window.innerHeight / document.body.offsetHeight);
-                    // alert(sbHeight);
-                    
-                  
-                });
-               
-                
-
-            }
-          })();
-        </script>
-
-        <script>
-            (function(){
-                if ($('#product_watch') !== null) {
-               
-                var idWatch = '';
-                var data1 = 0;
-                var data2 = 0;
-                var classify = 1;
-                var sortWatch = '';
-                var last_price = '';
-                sessionStorage.setItem('data1', 0);
-                sessionStorage.setItem('data2', 0);
-                watchAjax(0, 0, '', classify, '', '');
-
-                function watchAjax($data1, $data2, $id, $classify, $sortWatch, $last_price) {
-                    $.ajax({
-                        method: 'post',
-                        url: '{{ url('/watchAjax') }}',
-                        data: {
-
-                            data1: $data1,
-                            data2: $data2,
-                            id: $id,
-                            classify: $classify,
-                            sortWatch: $sortWatch,
-                            last_price: $last_price,
-                        },
-                        success: function(data) {
-                            if (data == '') {
-                                $('#load_more_watch').remove();
-                                return;
-                            } else {
-                                $('#load_more_watch').remove();
-                                $('#product_watch').append(data);
+                                    return;
+                                } else {
+                                    $('#load_more_product').remove();
+                                    $('#product_home').append(data);
+                                }
                             }
 
-                        }
+                        });
+                    }
 
-                    });
-                }
-
-                function dungchung($this) {
-                    document.getElementById('sxwatch').value = "00";
-                    $this.siblings().removeClass('active');
-                    $this.addClass('active');
-                    data1 = sessionStorage.getItem('data1');
-                    data2 = sessionStorage.getItem('data2');
-                    sortWatch = '';
-                    $('#product_watch').html('');
-                }
-                $(document).on('click', '#load_more_watch', function(e) {
-                    if (isDoubleClicked($(this))) return;
-                    idWatch = $(this).data('id');
-                    $('#load_more_watch').html('<b>Loading...</b>');
-                    data1 = sessionStorage.getItem('data1');
-                    data2 = sessionStorage.getItem('data2');
-                    last_price = $(this).data('price');
-                    watchAjax(data1, data2, idWatch, classify, sortWatch, last_price);
-
-
-
-                });
-
-                // $(window).scroll(function() {
-                //     if ($(window).scrollTop() + $(window).height()>=  $(document).height()) { 
-                //         var id = $('#load_more_watch').data('id');
-                //         $('#load_more_watch').html('<b>Loading...</b>');
-                //          watchAjax(data1, data2, id,classify);
-
-                //     }
-                // });   
-                // lấy ra tất cả thẻ có name là brandimage
-                //  var elements = document.querySelectorAll('.brandimage'); 
-
-                //Thêm vào 1 sự kiện click
-                // elements.addEventListener("click", function(e) { 
-                //  });
-
-                // từ id findBrandImagae tìm thẻ input
-                // var adu = $('#findBrandImagae').find('input');
-
-                //lấy tất cả phần tử con từ id findBrandImagae và lặp tất cả và click theo từng phần tử con
-                var children = document.querySelectorAll('#findBrandImagae>input');
-                var watchLi = $("#watchLi>li");
-
-                children.forEach((child) => {
-                    child.addEventListener('click', function(event) {
+                    $(document).on('click', '#load_more_product', function() {
                         if (isDoubleClicked($(this))) return;
-                        document.getElementById('sxwatch').value = "00";
-                        watchLi.removeClass();
-                        id_brand = $(this).val();
-                        sessionStorage.setItem('data1', id_brand);
-                        sessionStorage.setItem('data2', 99);
-                        data1 = sessionStorage.getItem('data1');
-                        data2 = sessionStorage.getItem('data2');
-                        sortWatch = '';
-                        $('#product_watch').html('');
-                        watchAjax(data1, data2, '', classify, '', '');
+                        var id = $(this).data('id');
+                        $('#load_more_product').html('<b>Loading...</b>');
+                        load_more(id);
+
+
 
                     });
-                });
-                //click theo id và find all brother of id and  removeClass, the addClass
 
-                $('#allwatch').click(function() {
-                    if (isDoubleClicked($(this))) return;
-                    sessionStorage.setItem('data1', 0);
-                    sessionStorage.setItem('data2', 0);
-                    dungchung($(this));
-                    watchAjax(data1, data2, '', classify, '', '');
-                });
-                $('#duoi2tr').click(function() {
-                    if (isDoubleClicked($(this))) return;
-                    sessionStorage.setItem('data1', 2000000);
-                    sessionStorage.setItem('data2', 0);
-                    dungchung($(this));
-                    watchAjax(data1, data2, '', classify, '', '');
-                });
-                $('#2den5tr').click(function() {
-                    if (isDoubleClicked($(this))) return;
-                    sessionStorage.setItem('data1', 2000000);
-                    sessionStorage.setItem('data2', 5000000);
-                    dungchung($(this));
-                    watchAjax(data1, data2, '', classify, '', '');
 
-                });
-                $('#5den10tr').click(function() {
-                    if (isDoubleClicked($(this))) return;
-                    sessionStorage.setItem('data1', 5000000);
-                    sessionStorage.setItem('data2', 10000000);
-                    dungchung($(this));
-                    watchAjax(data1, data2, '', classify, '', '');
-                });
-                $('#10den20tr').click(function() {
-                    if (isDoubleClicked($(this))) return;
-                    sessionStorage.setItem('data1', 10000000);
-                    sessionStorage.setItem('data2', 20000000);
 
-                    dungchung($(this));
-                    watchAjax(data1, data2, '', classify, '', '');
-                });
-                $('#tren20tr').click(function() {
-                    if (isDoubleClicked($(this))) return;
-                    sessionStorage.setItem('data1', 20000000);
-                    sessionStorage.setItem('data2', 0);
-                    dungchung($(this));
-                    watchAjax(data1, data2, '', classify, '', '');
-                });
+                    // alert(footer + 50);
 
-                $('#sxwatch').change(function() {
-                    sortWatch = $('#sxwatch').val();
-                    data1 = sessionStorage.getItem('data1');
-                    data2 = sessionStorage.getItem('data2');
 
-                    $('#product_watch').html('');
-                    watchAjax(data1, data2, '', classify, sortWatch, '');
 
-                });
+                    // alert(id);
+                    // if(id.offsetTop > 3094){
+                    // $(window).scroll(function() {
+                    //     //     var footer =  $('#footer').height();
+                    //     id = $('#load_more_product').data('id');
 
-            }
+                    //     // alert($(document).height() -400);
+                    //     // alert($(window).scrollTop() + $(window).height());
+                    //     if (($(window).scrollTop() + $(window).height()) >= $(document).height()) {
+
+
+                    //         $('#load_more_product').html('<b>Loading...</b>');
+
+                    //         load_more(id)
+
+
+                    //     }
+
+
+
+                    //     //alert($(window).scrollTop());
+                    //     //var aaa = id1.offsetTop - ($(window).scrollTop() + $(window).height());
+                    //     //     var idd1 =   $(document).scrollTop() + $(window).height();
+                    //     // alert(idd1);
+                    //     //  alert(id.offsetTop);
+                    //     // var sbHeight = window.innerHeight * (window.innerHeight / document.body.offsetHeight);
+                    //     // alert(sbHeight);
+
+
+                    // });
+
+
+
+                }
             })();
-            
         </script>
-
         <script>
-            (function(){
-                
-                
+            (function() {
+
+
                 function searchAjax($data) {
                     $.ajax({
                         method: 'post',
@@ -503,10 +387,10 @@
                         timeout: 3000,
                         data: {
 
-                            data: $data, 
+                            data: $data,
                         },
-                        success: function(data) {  
-                            
+                        success: function(data) {
+
                             $('#searchAjax').html(data);
                         }
                     });
@@ -514,24 +398,25 @@
 
 
                 function delay(callback, ms) {
-                var timer = 0;
+                    var timer = 0;
                     return function() {
-                        var context = this, args = arguments;
+                        var context = this,
+                            args = arguments;
                         clearTimeout(timer);
-                        timer = setTimeout(function () {
-                        callback.apply(context, args);
+                        timer = setTimeout(function() {
+                            callback.apply(context, args);
                         }, ms || 0);
                     };
                 }
-                $('#searchAjaxProduct').keyup(delay(function (e) {
+                $('#searchAjaxProduct').keyup(delay(function(e) {
                     data = $(this).val()
-                   if(data == null){
-                    searchAjax('');
-                   }else{
-                    searchAjax(data);
-                   }
+                    if (data == null) {
+                        searchAjax('');
+                    } else {
+                        searchAjax(data);
+                    }
                 }, 500));
-               
+
                 // $('#searchAjaxProduct').keyup(function(){
                 //     data = $(this).val()
                 //    if(data == null){
@@ -541,41 +426,54 @@
                 //    }
                 // });
 
-                $('#FormsearchAjaxProduct').submit(function(e){
-                    if($('#searchAjaxProduct').val() == ''){
-                         e.preventDefault();
-                       
+                $('#FormsearchAjaxProduct').submit(function(e) {
+                    if ($('#searchAjaxProduct').val() == '') {
+                        e.preventDefault();
+
                     }
-                    
+
                 });
 
-          
-                $('#searchAjaxProduct').blur(function(){
+
+                $('#searchAjaxProduct').blur(function() {
                     searchAjax('');
                 });
-               
-            })();
-                
-        </script>
-       <script>
-          (function(){
-            $('.addtocart').click(function(e){
-                e.preventDefault();
-                var id = $(this).data('id');
-                AddCartAjax(id);
-           });
 
-           function AddCartAjax ($product_id,e){
-            e.preventDefault();
-            var id = $product_id;
+            })();
+        </script>
+        <script>
+            (function() {
+                $('.addtocart').click(function(e) {
+                    e.preventDefault();
+                    var id = $(this).data('id');
+                    @if (Auth::check())
+                        AddCartAjax(id);
+                    @else
+                        window.location.href = "{{ url('/login.html') }}";
+                    @endif
+
+                });
+                $('#detailCartProduct').click(function(e) {
+                    e.preventDefault();
+                    var id = $(this).data('id');
+                    @if (Auth::check())
+                        AddCartAjax(id);
+                    @else
+                        window.location.href = "{{ url('/login.html') }}";
+                    @endif
+
+                });
+            })();
+
+            function AddCartAjax($product_id) {
                 $.ajax({
-                    url: '{{url('/add-cart-ajax')}}',
+                    url: '{{ url('/add-cart-ajax') }}',
                     method: 'POST',
-                    data:{
+                    data: {
                         product_id: $product_id,
                     },
-                    success:function(data){
-
+                    success: function(data) {
+                        $('#dropdowncart').html(data);
                         swal({
                                 title: "Đã thêm sản phẩm vào giỏ hàng",
                                 text: "Bạn có thể mua hàng tiếp hoặc tới giỏ hàng để tiến hành thanh toán",
@@ -586,19 +484,23 @@
                                 closeOnConfirm: false
                             },
                             function() {
-                                window.location.href = "{{url('/show-cart-ajax.html')}}";
+                                window.location.href = "{{ url('/show-cart-ajax.html') }}";
                             });
 
                     }
 
                 });
-        }
-          })();
+            }
+        </script>
+        <script>
+            $('#btnSeeMore').click(function(e) {
 
-        //  $('#clickcart').on('click', function(e){
-        //     e.preventDefault();
-        //     $('.dropdown-cart').css('display', 'block');
-            
-        //  });
-       </script>
+                $('#cartFormProduct').submit(function(e) {
+
+                    e.preventDefault();
+                });
+
+                window.location.href = "{{ url('/home.html') }}";
+            });
+        </script>
     </body>

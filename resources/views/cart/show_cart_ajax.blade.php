@@ -2,7 +2,10 @@
 @section('noidung')
 <div class="view__gioihang">
 	<div class="container">
-		<form action="#" method="POST">
+       
+        @if (!Session::get(Auth::user()->cart_token) == '')
+		{{-- <form action="" method="POST" id="cartFormProduct"> --}}
+		<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 		<table>
 			<thead>
 				<tr>
@@ -13,17 +16,26 @@
 					<th>Tổng</th>
 				</tr>
 			</thead>
+            @php
+                $total = 0;
+            @endphp
 			<tbody>
-				<tr>
+				@foreach (Session::get(Auth::user()->cart_token) as $key => $cart) 
+                   @php
+                        $totalProduct = $cart['product_qty'] * $cart['product_price'];
+                        // mỗi lần lặp thì cộng tổng sản phẩm lại
+                        $total += $totalProduct;
+                   @endphp
+                <tr>
 					<td>
 						<div class="img__gioihang">
-							<i class="far fa-times-circle"></i>
-							<img src="images/bg-4.jpg" alt="bg" width="80px" height="80px" class="img-responsive">
+							<a href="javascript:;" data-id ="{{$cart['product_id']}}" class="deleteCartAjaxProduct"><i class="far fa-times-circle"></i></a>
+							<img src="{{URL('public/updates/product/'.$cart['product_image'])}}" alt="bg" width="80px" height="80px">
 						</div>
 					</td>
 					<td>
 						<span class="name__gioihang">
-							sản phảm 1
+							{{$cart['product_name']}}
 
 						</span>
 					</td>
@@ -32,76 +44,36 @@
 							<div class="num-block skin-2">
 
 								<div class="num-in">
-									<span class="minus dis"></span>
-
-									<input type="text" class="in-num" value="1" min="1" max="99" readonly="">
-									<span class="plus"></span>
+									<span  class="minus dis"></span>
+									<input type="text" class="in-num" data-id="{{$cart['product_id']}}" value="{{$cart['product_qty']}}" min="1" max="99" readonly="">
+									<span  class="plus"></span>
 								</div>
 							</div>
 						</span>
 					</td>
 					<td>
 						<span class="price__gioihang">
-							500000d
+							{{$cart['product_price']}}
 						</span>
 					</td>
 					<td>
 						<span class="tong__gioihang">
-							5000.000Đ
+							{{$totalProduct}}
 						</span>
 					</td>
 				</tr>
-
-				<tr>
-					<td>
-						<div class="img__gioihang">
-							<i class="far fa-times-circle"></i>
-							<img src="images/bg-4.jpg" alt="bg" width="80px" height="80px" class="img-responsive">
-						</div>
-					</td>
-					<td>
-						<span class="name__gioihang">
-							sản phảm 1
-
-						</span>
-					</td>
-					<td>
-						<span class="soluong__gioihang">
-							<div class="num-block skin-2">
-
-								<div class="num-in">
-									<span class="minus dis"></span>
-
-									<input type="text" class="in-num" value="1" min="1" max="99" readonly="">
-									<span class="plus"></span>
-								</div>
-							</div>
-						</span>
-					</td>
-					<td>
-						<span class="price__gioihang">
-							500000d
-						</span>
-					</td>
-					<td>
-						<span class="tong__gioihang">
-							5000.000Đ
-						</span>
-					</td>
-				</tr>
-				<!-- <caption style="caption-side: bottom; text-align: center;">Không có sản phẩm nàotrong giỏi hàng.</caption>
- -->
+                    
+                @endforeach
+                
+				
+ 
 			</tbody>
 		</table>
-
-
-
-
 		<div class="total__quality-gioihang">
 			<ul>
 				<li>
 					Tổng phụ
-					<span>1000vnd</span>
+					<span>{{$total}}</span>
 				</li>
 				<li>
 					Thuế
@@ -116,16 +88,112 @@
 					<span>1000vnd</span>
 				</li>
 			</ul>
-
+			
 		<div class="button__gioihang">
-			<button type="submit" class="nhanxet__button"><i class="far fa-arrow-left" style="margin-right: 5px;"></i>Tiếp tục xem sản phẩm</button>
-			<button type="submit" class="nhanxet__button">Thanh toán</button>
+			<button id="btnSeeMore" class="nhanxet__button"><i class="far fa-arrow-left" style="margin-right: 5px;"></i>Tiếp tục xem sản phẩm</button>
+			<a  href="{{URL('/thanh-toan.html')}}">
+				<button type="button"  class="nhanxet__button">Thanh toán</button>
+			</a>
 		</div>
 		</div>
 
 
-		</form>
+	
+    @else
+        <div style="height:214px;">
+            <h3 style="text-align:center" >Chưa có sản phẩm nào trong giở hàng</h3>
+			<div class="button__gioihang">
+				<button id="btnSeeMore" class="nhanxet__button"><i class="far fa-arrow-left" style="margin-right: 5px;"></i>Tiếp tục xem sản phẩm</button>
+				
+			</div>
+        </div>
+    @endif
 	</div>
 </div>
+
+@endsection
+@section('javascript')
+{{-- <script {{ asset('public/fontend/js/cartAjax.js') }} ></script> --}}
+<script>
+    $('.deleteCartAjaxProduct').click(function(e){
+        if (isDoubleClicked($(this))) return;
+            e.preventDefault();
+            var id = $(this).data('id');
+            swal({
+                    title: "Xóa sản phẩm khỏi giỏ hàng",
+                    text: "Bạn có chắc muốn xóa sản phẩm này không",
+                    type: "warning",
+                    showCancelButton: true,
+                    cancelButtonText: "Không",
+                    confirmButtonClass: "btn-success",
+                    confirmButtonText: "Xóa",
+                    closeOnConfirm: false,
+  
+                },
+                function(isConfirm) {
+                    if (isConfirm) {
+                        DeleteCartAjax(id);
+                         
+                        swal({
+                               title: "Success",
+                               
+                               type: "success",
+                               confirmButtonText: "Xong",
+                           },
+                           function() {
+                               window.location.href = "{{url('/show-cart-ajax.html')}}";
+                           });
+                    } 
+                  
+                });            
+    });
+    	function DeleteCartAjax ($product_id){
+               $.ajax({
+                   url: '{{url('/delete-cart-ajax')}}',
+                   method: 'POST',
+                   data:{
+                       product_id: $product_id,
+                   },
+                   success:function(data){
+                   
+                   }
+
+               });
+         }
+		
+		let minus = document.querySelectorAll('.minus');
+		let plus = document.querySelectorAll('.plus');
+		minus.forEach((child) => {
+			child.addEventListener('click', function(event) {
+				if (isDoubleClicked($(this))) return;
+				var qty = (child.parentElement.querySelector('.in-num').value);
+				var id = (child.parentElement.querySelector('.in-num').getAttribute('data-id'));
+				UpdateCartAjax(id,qty);
+			});
+		});
+		plus.forEach((child) => {
+			child.addEventListener('click', function(event) {
+				if (isDoubleClicked($(this))) return;
+				var qty = (child.parentElement.querySelector('.in-num').value);
+				var id = (child.parentElement.querySelector('.in-num').getAttribute('data-id'));
+				UpdateCartAjax(id,qty);
+			});
+		});
+
+		function UpdateCartAjax ($product_id,$product_qty){
+               $.ajax({
+                   url: '{{url('/update-cart-ajax')}}',
+                   method: 'POST',
+                   data:{
+                       product_id: $product_id,
+					   product_qty: $product_qty,
+                   },
+                   success:function(data){
+					window.location.href = "{{url('/show-cart-ajax.html')}}";
+                   }
+
+               });
+        }
+</script>
 
 @endsection

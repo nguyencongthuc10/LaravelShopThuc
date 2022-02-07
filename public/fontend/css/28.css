@@ -57,7 +57,7 @@
 }
 
 .shopthuc .header-banner .menu .loginindex .dropdown-menu.logout {
-    width: 170px !important;
+    width: 190px !important;
 }
 
 .shopthuc .header-banner .menu .loginindex .username {
@@ -408,6 +408,11 @@ h3.title-comm:before {
 .shopthuc .header-banner .cart .cart-span:hover .dropdown-cart {
     display: initial;
 }
+.shopthuc .header-banner .cart .cart-span .dropdown-cart .group-product-cart {
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 300px;
+}
 .shopthuc .header-banner .cart .cout-cart {
     position: absolute;
     border: 1px solid;
@@ -421,7 +426,7 @@ h3.title-comm:before {
     display: none;
     height: auto;
     right: -17px;
-    top: 45px;
+    top: 43px;
     z-index: 1999;
     position: absolute;
     background: #f7dddd;
@@ -445,9 +450,16 @@ h3.title-comm:before {
     overflow-x: hidden;
     position: absolute;
     top: 0;
-    right: 0;
+    left: 25%;
     font-weight: bold;
-    display: grid;
+}
+.shopthuc .header-banner .cart .dropdown-cart .product-cart .item-cart .div-name-pr-cart {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    width: 125px;
 }
 .shopthuc .header-banner .cart .dropdown-cart .price-cart {
     border-top: 2px solid #f62727;
